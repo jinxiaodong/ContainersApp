@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:paddingTop="@dimen/padding_5dp"
+    tools:context="com.project.container.containersapp.business.checkbox.CheckBoxListActivilty">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/padding_44dp"
+        android:layout_marginLeft="@dimen/padding_5dp"
+        android:layout_marginRight="@dimen/padding_5dp"
+        android:background="#002060"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="@dimen/padding_1dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:background="@color/gray_444444">
+        </View>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:layout_weight="1.2"
+            android:gravity="center"
+            android:text="运单号/箱号"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18sp"/>
+
+        <View
+            android:layout_width="@dimen/padding_1dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:background="@color/gray_444444">
+
+        </View>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:layout_weight="1.5"
+            android:gravity="center"
+            android:text="箱区箱位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18sp"/>
+
+        <View
+            android:layout_width="@dimen/padding_1dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:background="@color/gray_444444">
+        </View>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="操作"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18sp"/>
+
+        <View
+            android:layout_width="@dimen/padding_1dp"
+            android:layout_height="@dimen/padding_44dp"
+            android:background="@color/gray_444444">
+        </View>
+    </LinearLayout>
+
+</LinearLayout>

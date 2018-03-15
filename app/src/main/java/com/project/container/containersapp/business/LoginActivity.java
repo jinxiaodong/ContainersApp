@@ -1,14 +1,17 @@
 package com.project.container.containersapp.business;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.project.container.containersapp.R;
-import com.project.container.containersapp.frame.base.CABaseActivity;
+import com.project.container.containersapp.frame.base.JZXBaseActivity;
+import com.project.container.containersapp.frame.block.LoginBlock;
 import com.project.container.containersapp.frame.model.UserInfoBean;
 import com.project.container.containersapp.frame.presenter.IBaseView;
 import com.project.container.containersapp.frame.presenter.login.LoginPresenter;
@@ -24,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public class LoginActivity extends CABaseActivity implements View.OnClickListener, IBaseView<UserInfoBean> {
+public class LoginActivity extends JZXBaseActivity implements View.OnClickListener, IBaseView<UserInfoBean> {
 
 
     @BindView(R.id.login_et_name)
@@ -45,6 +48,8 @@ public class LoginActivity extends CABaseActivity implements View.OnClickListene
     /*登录请求*/
     LoginPresenter mLoginPresenter;
 
+    UserInfoBean mUserInfo;
+
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_login;
@@ -54,6 +59,10 @@ public class LoginActivity extends CABaseActivity implements View.OnClickListene
     @Override
     protected void initValue(Bundle onSavedInstance) {
         super.initValue(onSavedInstance);
+        if (TextUtils.isEmpty(LoginBlock.getmAuth())) {
+            mUserInfo = LoginBlock.getUSerInfo();
+            goActivity();
+        }
         mLoginPresenter = new LoginPresenter(this, this);
     }
 
@@ -111,7 +120,6 @@ public class LoginActivity extends CABaseActivity implements View.OnClickListene
                     ToastUtil.makeToast(mContext, "请输入密码！");
                     return;
                 }
-
                 showDialog();
                 mLoginPresenter.Login(name, password);
                 break;
@@ -122,12 +130,45 @@ public class LoginActivity extends CABaseActivity implements View.OnClickListene
     public void onSuccess(UserInfoBean data) {
         dismissDialog();
         //请求成功
-        ToastUtil.makeToast(mContext, data.toString());
+
+        //保存用户信息
+        if (data != null) {
+            mUserInfo = data;
+            LoginBlock.setUserInfo(data);
+            LoginBlock.setmAuth(data.auth);
+            LoginBlock.setRoles(data.roles);
+            ToastUtil.makeToast(mContext, "登录成功");
+            goActivity();
+        } else {
+            //获取用户信息为空，重新去登录试试
+            ToastUtil.makeToast(mContext, "登录失败");
+        }
     }
 
     @Override
     public void onError(String code, String msg) {
-        //请求失败
-        ToastUtil.makeToast(mContext, msg);
+        dismissDialog();
+        //请求失败：提示登录失败
+        ToastUtil.makeToast(mContext, "登录失败");
+    }
+
+
+    private void goActivity() {
+        //角色 > 1是跳选择页面
+        //角色 == 1 直接跳操作页面
+        Intent intent;
+        int size = mUserInfo.roles.size();
+        if (size > 1) {
+            //跳转到选择页面
+            intent = new Intent(mContext, MainActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (size == 1) {
+            //根据具体角色跳转到相应操作页面
+
+            finish();
+        } else {
+            //跳转到一个空页面提示该角色无权限。
+        }
     }
 }

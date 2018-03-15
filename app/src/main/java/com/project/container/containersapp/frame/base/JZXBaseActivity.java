@@ -26,7 +26,7 @@ import com.redstar.library.base.BaseActivity;
  * description：集装箱APP基类Activity：所有activity继承该类实现自有业务。
  */
 
-public class CABaseActivity extends BaseActivity {
+public class JZXBaseActivity extends BaseActivity {
 
     /*TAG*/
     public final String TAG = getClass().getSimpleName();
@@ -97,6 +97,10 @@ public class CABaseActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
+            if (mHandler != null) {
+                mHandler.removeCallbacksAndMessages(null);
+                mHandler = null;
+            }
             DialogUtils.dismissDiaog();
         } catch (Exception e) {
             e.printStackTrace();
@@ -338,6 +342,15 @@ public class CABaseActivity extends BaseActivity {
         }
     }
 
+    /*
+    * */
+    public TextView getMyTitle() {
+        if (mTvTitle == null) {
+            mTvTitle = (TextView) findViewById(R.id.title_bar_title_text);
+        }
+        return mTvTitle;
+    }
+
     /**
      * @param
      * @return
@@ -483,7 +496,7 @@ public class CABaseActivity extends BaseActivity {
         getHandler().post(new Runnable() {
             @Override
             public void run() {
-                if (!CABaseActivity.this.isFinishing()) {
+                if (!JZXBaseActivity.this.isFinishing()) {
                     DialogUtils.showDialog(mContext, true, msg);
                 }
             }

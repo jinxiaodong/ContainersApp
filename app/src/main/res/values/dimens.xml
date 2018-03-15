@@ -13,6 +13,7 @@
     <dimen name="font_20sp">20sp</dimen>
 
     <dimen name="padding_2dp">2dp</dimen>
+    <dimen name="padding_1dp">1dp</dimen>
     <dimen name="padding_3dp">3dp</dimen>
     <dimen name="padding_4dp">4dp</dimen>
     <dimen name="padding_5dp">5dp</dimen>

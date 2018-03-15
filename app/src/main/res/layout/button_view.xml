@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_button"
+    android:layout_width="180dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="@dimen/padding_10dp"
+    android:background="@drawable/button_shape"
+    android:gravity="center">
+
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_button"
+        android:gravity="center"
+        android:text="吊箱"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_18sp"/>
+
+</LinearLayout>
