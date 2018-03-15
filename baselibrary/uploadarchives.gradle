@@ -1,0 +1,51 @@
+apply plugin: 'maven'
+
+def MAVEN_RELEASE_PATH ='http://nexus.corp.rs.com/nexus/content/repositories/releases/'
+def MAVEN_SNAPSHOT_PATH = 'http://nexus.corp.rs.com/nexus/content/repositories/snapshots/'
+def GROUP_ID = 'com.chinaredstar.android'
+def ARTIFACT_ID = 'hx-base-library'
+def VERSION_NAME = '1.0.3-SNAPSHOT'
+
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                snapshotRepository(url: MAVEN_SNAPSHOT_PATH) {
+                    authentication(userName: 'admin', password: 'adminHc&U')
+                }
+
+                repository(url: MAVEN_RELEASE_PATH) {
+                    authentication(userName: 'admin', password: 'adminHc&U')
+                }
+
+                pom.project {
+                    groupId GROUP_ID
+                    artifactId ARTIFACT_ID
+                    version VERSION_NAME
+                    packaging 'aar'
+                }
+            }
+        }
+    }
+
+    task androidJavadocs(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+
+    task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+        classifier = 'javadoc'
+        from androidJavadocs.destinationDir
+    }
+
+    task androidSourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.sourceFiles
+    }
+
+    artifacts {
+        archives androidSourcesJar
+//        archives androidJavadocsJar
+    }
+}

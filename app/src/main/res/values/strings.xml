@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">集装箱APP</string>
+    <string name="defaulimg">defaultimg</string>
+    <string name="cancel">取消</string>
+    <string name="password">密码</string>
+    <string name="login">登录</string>
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.project.container.containersapp.business.LoginActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_15dp">
+
+
+        <com.project.container.containersapp.frame.view.ClearEditText
+            android:id="@+id/login_et_name"
+            style="@style/edit_style"
+            android:layout_width="match_parent"
+            android:layout_marginTop="47dp"
+            android:hint="用户名"
+            android:inputType="textVisiblePassword"/>
+
+        <TextView
+            android:id="@+id/divider_id_login"
+            style="@style/divider_style"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+        <com.project.container.containersapp.frame.view.PwdView
+            android:id="@+id/login_pwd"
+            app:hint_text="@string/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/gray_999999"
+            android:textSize="@dimen/font_15sp"/>
+
+        <TextView
+            android:id="@+id/divider_psw_login"
+            style="@style/divider_style"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+
+
+        <Button
+            android:id="@+id/login_sure"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="54dp"
+            android:background="@drawable/btn_blue_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:padding="@dimen/padding_15dp"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16sp"/>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
