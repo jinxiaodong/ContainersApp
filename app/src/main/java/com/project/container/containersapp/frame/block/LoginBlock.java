@@ -57,7 +57,7 @@ public class LoginBlock {
     /*获取auth*/
     public static String getmAuth() {
         if (mAuthToken == null) {
-            String string = PreferencesUtils.getString(JZXApplication.getInstance(), PreferencesKeys.USER_AUTH, "");
+            mAuthToken = PreferencesUtils.getString(JZXApplication.getInstance(), PreferencesKeys.USER_AUTH, "");
         }
         return mAuthToken;
     }

@@ -7,11 +7,10 @@ import android.util.Log;
 import com.orhanobut.logger.Logger;
 
 
-
 public class LogUtil {
 
     //log config
-    public static boolean logDebug = false;
+    public static boolean logDebug = true;
 
 
     /**

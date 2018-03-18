@@ -34,8 +34,7 @@ public class DefaultLoadMoreView extends RelativeLayout implements ILoadMoreView
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.loadmore_view_default, this);
-        ;
+        inflate(context, R.layout.loadmore_view_default, this);;
         mPbLoading = (ProgressBar) findViewById(R.id.pb_loading);
         mTvMessage = (TextView) findViewById(R.id.tv_loading_msg);
     }
@@ -44,22 +43,19 @@ public class DefaultLoadMoreView extends RelativeLayout implements ILoadMoreView
     public void showNormal() {
 /*        mPbLoading.setVisibility(View.GONE);
         mTvMessage.setText(R.string.loading_view_click_loading_more);*/
-        mPbLoading.setVisibility(View.VISIBLE);
+        mPbLoading.setVisibility(View.GONE);
         mTvMessage.setText(R.string.loading_view_loading);
     }
 
     @Override
     public void showNoMore() {
-        //bugly #6147 特殊情况下有空指针问题
-        if (mPbLoading != null) {
-            mPbLoading.setVisibility(View.GONE);
-            mTvMessage.setText(R.string.loading_view_no_more);
-        }
+        mPbLoading.setVisibility(View.GONE);
+        mTvMessage.setText(R.string.loading_view_no_more);
     }
 
     @Override
     public void showLoading() {
-        mPbLoading.setVisibility(View.VISIBLE);
+        mPbLoading.setVisibility(View.GONE);
         mTvMessage.setText(R.string.loading_view_loading);
     }
 

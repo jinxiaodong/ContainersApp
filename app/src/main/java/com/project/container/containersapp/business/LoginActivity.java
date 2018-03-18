@@ -3,7 +3,6 @@ package com.project.container.containersapp.business;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,7 +58,7 @@ public class LoginActivity extends JZXBaseActivity implements View.OnClickListen
     @Override
     protected void initValue(Bundle onSavedInstance) {
         super.initValue(onSavedInstance);
-        if (TextUtils.isEmpty(LoginBlock.getmAuth())) {
+        if (LoginBlock.getUSerInfo() != null) {
             mUserInfo = LoginBlock.getUSerInfo();
             goActivity();
         }

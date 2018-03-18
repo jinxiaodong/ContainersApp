@@ -29,6 +29,8 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".business.checkbox.CheckBoxDetailActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -1,73 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_checkbox"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding_5dp"
+    android:paddingRight="@dimen/padding_5dp"
     android:paddingTop="@dimen/padding_5dp"
     tools:context="com.project.container.containersapp.business.checkbox.CheckBoxListActivilty">
 
-    <LinearLayout
+
+    <com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout
+        android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/padding_44dp"
-        android:layout_marginLeft="@dimen/padding_5dp"
-        android:layout_marginRight="@dimen/padding_5dp"
-        android:background="#002060"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <View
-            android:layout_width="@dimen/padding_1dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:background="@color/gray_444444">
-        </View>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:layout_weight="1.2"
-            android:gravity="center"
-            android:text="运单号/箱号"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18sp"/>
+            <LinearLayout
+                android:id="@+id/ll_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_44dp"
+                android:background="#002060"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="invisible">
 
-        <View
-            android:layout_width="@dimen/padding_1dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:background="@color/gray_444444">
 
-        </View>
+                <View
+                    android:layout_width="@dimen/padding_1dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/gray_444444">
+                </View>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:text="箱区箱位"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18sp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="1.4"
+                    android:gravity="center"
+                    android:text="运单号/箱号"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
 
-        <View
-            android:layout_width="@dimen/padding_1dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:background="@color/gray_444444">
-        </View>
+                <View
+                    android:layout_width="@dimen/padding_1dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/gray_444444">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="操作"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18sp"/>
+                </View>
 
-        <View
-            android:layout_width="@dimen/padding_1dp"
-            android:layout_height="@dimen/padding_44dp"
-            android:background="@color/gray_444444">
-        </View>
-    </LinearLayout>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="1.7"
+                    android:gravity="center"
+                    android:text="箱区箱位"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
 
-</LinearLayout>
+                <View
+                    android:layout_width="@dimen/padding_1dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/gray_444444">
+                </View>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="0.8"
+                    android:gravity="center"
+                    android:text="操作"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
+
+                <View
+                    android:layout_width="@dimen/padding_1dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/gray_444444">
+                </View>
+            </LinearLayout>
+
+            <com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView
+                android:id="@+id/loadMoreRecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+            </com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView>
+
+        </LinearLayout>
+
+    </com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout>
+
+</RelativeLayout>

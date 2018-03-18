@@ -116,7 +116,7 @@ public class MainActivity extends JZXBaseActivity {
                 intent = new Intent(mContext, CheckBoxListActivilty.class);
                 break;
             case "吊箱":
-                intent = new Intent(mContext, CheckBoxListActivilty.class);
+//                intent = new Intent(mContext, CheckBoxListActivilty.class);
 
                 break;
             case "装箱":

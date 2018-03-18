@@ -23,7 +23,7 @@ import com.redstar.library.base.BaseActivity;
 
 /**
  * Created by xiaodong.jin on 2018/3/14.
- * description：集装箱APP基类Activity：所有activity继承该类实现自有业务。
+ * description：集装箱APP基类Activity：所有activity继承该类实现业务。
  */
 
 public class JZXBaseActivity extends BaseActivity {
@@ -557,6 +557,7 @@ public class JZXBaseActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         //donothing
+                        reRequestData();
                     }
                 });
                 ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,

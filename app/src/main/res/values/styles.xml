@@ -1,14 +1,12 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/main_blue</item>
         <item name="colorPrimaryDark">@color/main_blue</item>
         <item name="colorAccent">@color/main_blue</item>
         <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
-        <!-- 使用swipebacklayout 需要加上的属性 -->
-        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <!--系统dilog样式-->

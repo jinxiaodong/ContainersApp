@@ -8,7 +8,7 @@
     <color name="transparent">#00000000</color>
     <color name="gold">#b89766</color>
     <color name="gray">#FFBDBEBD</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="white_f9ffff">#F9FFFF</color>
     <color name="blue">#FF0000FF</color>
     <color name="black">#FF000000</color>
@@ -46,11 +46,13 @@
     <color name="menu_text_color">#333333</color>
 
     <!--主色蓝-->
-    <color name="main_blue">#0091ea</color>//页面主色  主色蓝
+    <color name="main_blue">#0091ea</color>//页面主色 主色蓝
     <color name="main_blue2">#0D439df7</color>
     <color name="blue_b5d7fc">#B5D7FC</color>
+    <color name="blue_list_bg">#c6d9f1</color>
     <color name="blue_4D439DF7">#4D439DF7</color>
     <color name="blue_368DF4">#368DF4</color>
+    <color name="button_blue">#2196f3</color>
     <color name="blue_E6F0F9">#E6F0F9</color>
     <color name="blue_F5FAFF">#F5FAFF</color>
     <color name="blue_5788FF">#5788ff</color>

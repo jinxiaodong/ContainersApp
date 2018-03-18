@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by lenovo on 2016/7/21.
- */
+/*
+* recycleView 适配器封装，自己的适配器继承该类实现业务逻辑。
+* */
 public class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHold> {
 
     private Handler handler;

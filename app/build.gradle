@@ -43,11 +43,16 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     implementation project(':network')
     implementation project(':baselibrary')
-    //log
+    //logger
     compile 'com.orhanobut:logger:1.15'
     /*butterKnife*/
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //recycleview
     compile "com.android.support:recyclerview-v7:26.1.0"
+    //pull to refresh
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
+    //eventbus
+    compile 'org.greenrobot:eventbus:3.0.0'
+
 }
