@@ -2,16 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_checkbox"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/padding_5dp"
-    android:paddingRight="@dimen/padding_5dp"
-    android:paddingTop="@dimen/padding_5dp"
-    tools:context="com.project.container.containersapp.business.checkbox.CheckBoxListActivilty">
-
+    android:id="@+id/rl_hanging_box"
+    tools:context="com.project.container.containersapp.business.hangingbox.HangingBoxActivity">
 
     <com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout
         android:id="@+id/pullToRefresh"
@@ -58,14 +52,14 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="@dimen/padding_44dp"
-                    android:layout_weight="1.7"
+                    android:layout_weight="1.6"
                     android:gravity="center"
-                    android:text="箱区箱位"
+                    android:text="所属企业/托运人"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_18sp"/>
 
                 <View
-                    android:layout_width="@dimen/padding_0.5dp"
+                    android:layout_width="@dimen/padding_1dp"
                     android:layout_height="@dimen/padding_44dp"
                     android:background="@color/divider">
                 </View>
@@ -89,13 +83,12 @@
             <com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView
                 android:id="@+id/loadMoreRecycleView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="wrap_content">
 
             </com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView>
-
         </LinearLayout>
 
     </com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout>
+
 
 </RelativeLayout>

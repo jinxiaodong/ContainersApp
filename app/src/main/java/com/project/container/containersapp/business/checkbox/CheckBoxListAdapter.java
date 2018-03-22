@@ -18,8 +18,6 @@ import java.util.List;
 public class CheckBoxListAdapter extends BaseRecyclerAdapter<CheckBoxListBean> {
 
 
-
-
     public CheckBoxListAdapter(Context context, List<CheckBoxListBean> list) {
         super(context, list);
     }

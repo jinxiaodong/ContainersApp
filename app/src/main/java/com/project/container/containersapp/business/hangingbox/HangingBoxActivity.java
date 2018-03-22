@@ -1,4 +1,4 @@
-package com.project.container.containersapp.business.checkbox;
+package com.project.container.containersapp.business.hangingbox;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.widget.RelativeLayout;
 import com.project.container.containersapp.R;
 import com.project.container.containersapp.business.EventsKey;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
-import com.project.container.containersapp.frame.model.CheckBoxListBean;
+import com.project.container.containersapp.frame.model.DXBoxListBean;
 import com.project.container.containersapp.frame.presenter.IBaseListView;
-import com.project.container.containersapp.frame.presenter.checkbox.CheckBoxListPresenter;
+import com.project.container.containersapp.frame.presenter.hangingbox.DXBoxListPresenter;
 import com.project.container.containersapp.frame.utils.SystemBarUtil;
 import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout;
@@ -30,53 +30,42 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
-/*
-* 验箱列表页面
-* */
-public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListView<CheckBoxListBean> {
+public class HangingBoxActivity extends JZXBaseActivity implements IBaseListView<DXBoxListBean> {
 
-    @BindView(R.id.loadMoreRecycleView)
-    LoadMoreRecyclerView mLoadMoreRecycleView;
     @BindView(R.id.ll_title)
     LinearLayout mLlTitle;
+    @BindView(R.id.loadMoreRecycleView)
+    LoadMoreRecyclerView mLoadMoreRecycleView;
     @BindView(R.id.pullToRefresh)
     PullToRefreshFrameLayout mPullToRefresh;
-    @BindView(R.id.rl_checkbox)
-    RelativeLayout mRlCheckbox;
+    @BindView(R.id.rl_hanging_box)
+    RelativeLayout mRlHangingBox;
 
-    /*recycleView 数据适配器*/
-    private CheckBoxListAdapter mAdapter;
-    /*数据提供者*/
-    private CheckBoxListPresenter mCheckBoxListPresenter;
+    private DXBoxListPresenter mDXBoxListPresenter;
+    private HangingBoxListAdapter mAdapter;
 
     @Override
     protected int getContentLayoutId() {
-        return R.layout.activity_check_box_list_activilty;
+        return R.layout.activity_hanging_box;
     }
 
     @Override
     protected void initValue(Bundle onSavedInstance) {
         super.initValue(onSavedInstance);
         EventBus.getDefault().register(this);
-        mCheckBoxListPresenter = new CheckBoxListPresenter(this, this);
+        mDXBoxListPresenter = new DXBoxListPresenter(this, this);
     }
+
 
     @Override
     protected void initWidget(Bundle onSavedInstance) {
         super.initWidget(onSavedInstance);
-        setTitle("验箱");
-
+        setTitle("吊箱");
         //设置沉浸式
         SystemBarUtil.tintStatusBar(this, Color.parseColor(getResString(R.color.main_blue)), 0);
 
         mLoadMoreRecycleView.setHasLoadMore(false);
-        //第一次没有数据是否隐藏底部“没有更多了”view
-//        mLoadMoreRecycleView.setNoLoadMoreHideView(true);
-//        mLoadMoreRecycleView.setNoLoadMoreHideViewFrist(false);
-
-
     }
-
 
     @Override
     protected void initListener(Bundle onSavedInstance) {
@@ -84,10 +73,7 @@ public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListV
         mLoadMoreRecycleView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void loadMore() {
-                if (mCheckBoxListPresenter != null) {
-
-                    mCheckBoxListPresenter.getListDataMore();
-                }
+                getListDataMore();
             }
         });
 
@@ -101,32 +87,23 @@ public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListV
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 showDialog();
-                if (mCheckBoxListPresenter != null) {
-                    mCheckBoxListPresenter.getListData();
-                }
+                getListData();
             }
         });
+
     }
+
 
     @Override
     protected void initData(Bundle onSavedInstance) {
         super.initData(onSavedInstance);
 
-        mAdapter = new CheckBoxListAdapter(mContext, null);
+        mAdapter = new HangingBoxListAdapter(mContext, null);
         mLoadMoreRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
         mLoadMoreRecycleView.setAdapter(mAdapter);
 
         showDialog();
-        mCheckBoxListPresenter.getListData();
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(EventsKey event) {
-        if (event == EventsKey.REFRESH_CHECKBOX) {
-            ToastUtil.makeToast(mContext, "lalal");
-            mCheckBoxListPresenter.getListData();
-        }
+        getListData();
     }
 
     /*出错后点击屏幕重新请求数据*/
@@ -134,14 +111,33 @@ public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListV
     public void reRequestData() {
         super.reRequestData();
         showDialog();
-        mCheckBoxListPresenter.getListData();
+        getListData();
     }
 
-    /*
-            * 首次加载成功
-            * */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(EventsKey event) {
+        if (event == EventsKey.REFRESH_HANGINGBOX) {
+            ToastUtil.makeToast(mContext, "刷新吊箱");
+            getListData();
+        }
+    }
+
+    public void getListData() {
+        if (mDXBoxListPresenter != null) {
+            mDXBoxListPresenter.getListData();
+        }
+    }
+
+    public void getListDataMore() {
+        if (mDXBoxListPresenter != null) {
+            mDXBoxListPresenter.getListDataMore();
+        }
+    }
+
+
+    /**********获取数据后的处理************/
     @Override
-    public void onSuccess(List<CheckBoxListBean> list) {
+    public void onSuccess(List<DXBoxListBean> list) {
         /*UI部分*/
         dismissDialog();
         hideNoDataNoti();
@@ -152,48 +148,34 @@ public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListV
         mAdapter.getData().clear();
         mAdapter.getData().addAll(list);
         mAdapter.notifyDataSetChanged();
-
     }
 
-    /*
-    * 加载更多成功
-    * */
     @Override
-    public void onLoadMore(List<CheckBoxListBean> list) {
+    public void onLoadMore(List<DXBoxListBean> list) {
         mAdapter.getData().addAll(list);
         mAdapter.notifyDataSetChanged();
     }
 
-    /*
-    * 返回数据为空
-    * */
     @Override
     public void onEmpty() {
         dismissDialog();
         //显示空布局
-        showNoDataNoti(mRlCheckbox, R.layout.default_page_no_content);
+        showNoDataNoti(mRlHangingBox, R.layout.default_page_no_content);
     }
 
-    /*
-    * 首次加载失败
-    * */
     @Override
     public void onError(String code, String msg) {
         dismissDialog();
         //显示出错布局
-        showNoDataNoti(mRlCheckbox, R.layout.default_page_failed);
+        showNoDataNoti(mRlHangingBox, R.layout.default_page_failed);
     }
 
-    /*
-    * 加载更多失败
-    * */
     @Override
     public void onLoadMoreError(String code, String msg) {
         mLoadMoreRecycleView.setHasLoadMore(false);
         mLoadMoreRecycleView.showFailUI();
     }
 
-    /*是否有下一页*/
     @Override
     public void onHasNext(boolean hasNext) {
         mLoadMoreRecycleView.setHasLoadMore(hasNext);
@@ -202,7 +184,6 @@ public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListV
             mLoadMoreRecycleView.showNoMoreUI();
         }
     }
-
 
     @Override
     protected void onDestroy() {

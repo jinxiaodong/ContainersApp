@@ -10,9 +10,45 @@ public class HttpContstants {
     public static String HTTP_BASE= "http://118.89.230.151/";
 
 
+
     /*登录接口*/
     public  static  String LOGIN = HTTP_BASE+"jzx/api/login";
 
     /*验箱列表*/
     public static String CHECK_BOX  = HTTP_BASE+"jzx/api/yanxianglist";
+
+    /*箱损类型*/
+    //jzx/api/posunleixing
+    public static String TYPE_XIANGSUN = HTTP_BASE+"jzx/api/posunleixing";
+
+    /*更新集装箱破损状态*/
+    //jzx/api/updatexiangsun?auth=QwFu-MWb3OmGvt2T9ne5-tkuP4_5nk0G&zyjzxdm=TBJU1000005&pszt=AB
+    public static String UPDATE_XIANGSUN = HTTP_BASE+"jzx/api/updatexiangsun";
+
+    /*验箱通过*/
+    //验箱通过接口地址：jzx/api/yanxiangpass?auth=QwFu-MWb3OmGvt2T9ne5-tkuP4_5nk0G&zydm=2
+    public static  String  CHECKBOX_PASS = HTTP_BASE+"jzx/api/yanxiangpass";
+
+    /*换箱接口*/
+    public static String CHECKBOX_EXCHANGE= HTTP_BASE+"jzx/api/huanxiang";
+
+    /*自动获取可用空箱*/
+    //jzx/api/jzxautocomplete?auth=xxx&term=xxx
+    public static String AUTO_COMPLETE_BOX =HTTP_BASE+"jzx/api/jzxautocomplete";
+
+    /*更新作业状态*/
+    //jzx/api/updatezuoye?auth=xxx
+    public static  String UPDATE_ZY_STATUS = HTTP_BASE+"jzx/api/updatezuoye";
+
+
+    /*
+    吊箱列表接口：/jzx/api/diaoxianglist?auth=xxx
+    吊箱过程列表接口：jzx/api/diaoxiangdan?auth=xxx&zydm=xxx
+    * */
+    /*吊箱列表*/
+    public  static String  DX_LIST = HTTP_BASE+"jzx/api/diaoxianglist";
+
+    /*吊箱过程列表*/
+    public static String  DX_PROCESS_LIST = HTTP_BASE+"jzx/api/diaoxiangdan";
+
 }

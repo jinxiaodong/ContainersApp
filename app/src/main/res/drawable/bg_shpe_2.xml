@@ -5,8 +5,10 @@
     <stroke
         android:width="@dimen/padding_1dp"
         android:color="#d2a9a7"
+
         ></stroke>
     <solid
-        android:color="#aaf3ddfd"
+        android:color="@color/transparent"
         ></solid>
 </shape>
+    <!--android:color="#aaf3ddfd"-->

@@ -16,5 +16,6 @@ public class CheckBoxListBean extends BaseListBean<CheckBoxListBean> {
     public String xqdm;         //箱区代码
     public String xwdm;         //箱位代码
     public String xqmc;         //箱区名称
+    public String zytype;       //1：表示发送作业，2表示到达作业。
 
 }

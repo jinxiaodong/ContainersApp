@@ -1,45 +1,48 @@
-package com.project.container.containersapp.frame.presenter.checkbox;
+package com.project.container.containersapp.frame.presenter.hangingbox;
 
 import android.content.Context;
 
 import com.project.container.containersapp.frame.block.LoginBlock;
 import com.project.container.containersapp.frame.constants.HttpContstants;
-import com.project.container.containersapp.frame.model.CheckBoxListBean;
+import com.project.container.containersapp.frame.model.DXBoxListBean;
 import com.project.container.containersapp.frame.presenter.IBaseListView;
 import com.project.container.containersapp.frame.presenter.Presenter;
 import com.project.container.network.assist.ResponseData;
 import com.project.container.network.assist.UserCallback;
 import com.project.container.network.request.HttpJsonRequest;
+import com.project.container.network.request.HttpRequest;
 
 import java.util.List;
 
 /**
- * Created by xiaodong.jin on 2018/3/16.
- * description：
+ * Created by xiaodong.jin on 2018/3/19.
+ * description：吊箱数据presenter；
  */
 
-public class CheckBoxListPresenter extends Presenter<IBaseListView<CheckBoxListBean>> {
+public class DXBoxListPresenter extends Presenter<IBaseListView<DXBoxListBean>> {
 
-    HttpJsonRequest mRequest;
+    HttpRequest mHttpRequest;
+
     private int pagesize = 15;
     private int page = 1;
 
     private boolean isLoadMore = false;
 
-    public CheckBoxListPresenter(Context context, IBaseListView<CheckBoxListBean> mvpView) {
+    public DXBoxListPresenter(Context context, IBaseListView<DXBoxListBean> mvpView) {
         super(context, mvpView);
-        mRequest = new HttpJsonRequest(mContext);
+        mHttpRequest = new HttpJsonRequest(mContext);
     }
 
     public void getListData() {
-        isLoadMore = false;
         page = 1;
+        isLoadMore = false;
         requestData();
+
     }
 
     public void getListDataMore() {
-        isLoadMore = true;
         page++;
+        isLoadMore = true;
         requestData();
     }
 
@@ -52,21 +55,19 @@ public class CheckBoxListPresenter extends Presenter<IBaseListView<CheckBoxListB
         put("auth", auth);
         put("page", page);
         put("pagesize", pagesize);
-        /*0:表示请求全部数据，1表示请求发送作业，2表示请求到达作业*/
-        put("zytype","0");
 
-        mRequest.url(HttpContstants.CHECK_BOX)
+        mHttpRequest.url(HttpContstants.DX_LIST)
                 .params(mParams)
-                .clazz(CheckBoxListBean.class)
+                .clazz(DXBoxListBean.class)
                 .get()
                 .callback(new UserCallback() {
                     @Override
                     public void onSuccess(ResponseData result) {
                         if ("200".equals(result.code)) {
-                            CheckBoxListBean checkBoxListBean = (CheckBoxListBean) result.data;
-                            List<CheckBoxListBean> list = checkBoxListBean.list;
+                            DXBoxListBean dxBoxListBean = (DXBoxListBean) result.data;
+                            List<DXBoxListBean> list = dxBoxListBean.list;
                             if (list != null && list.size() > 0) {
-                                mvpView.onHasNext(checkBoxListBean.isHasNext());
+                                mvpView.onHasNext(dxBoxListBean.isHasNext());
                                 if (isLoadMore) {
                                     mvpView.onLoadMore(list);
                                     return;
@@ -94,6 +95,4 @@ public class CheckBoxListPresenter extends Presenter<IBaseListView<CheckBoxListB
                     }
                 }).commitAsync();
     }
-
-
 }

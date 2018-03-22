@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.project.container.containersapp.R;
 import com.project.container.containersapp.business.checkbox.CheckBoxListActivilty;
+import com.project.container.containersapp.business.hangingbox.HangingBoxActivity;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.block.LoginBlock;
 import com.project.container.containersapp.frame.utils.DisplayUtil;
@@ -42,7 +43,6 @@ public class MainActivity extends JZXBaseActivity {
     protected void initValue(Bundle onSavedInstance) {
         super.initValue(onSavedInstance);
         mRoles = LoginBlock.getRoles();
-        mRoles.add("关闭");
     }
 
     @Override
@@ -116,7 +116,7 @@ public class MainActivity extends JZXBaseActivity {
                 intent = new Intent(mContext, CheckBoxListActivilty.class);
                 break;
             case "吊箱":
-//                intent = new Intent(mContext, CheckBoxListActivilty.class);
+                intent = new Intent(mContext, HangingBoxActivity.class);
 
                 break;
             case "装箱":

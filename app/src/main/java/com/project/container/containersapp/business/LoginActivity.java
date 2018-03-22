@@ -159,6 +159,8 @@ public class LoginActivity extends JZXBaseActivity implements View.OnClickListen
         int size = mUserInfo.roles.size();
         if (size > 1) {
             //跳转到选择页面
+            mUserInfo.roles.add("关闭");
+            LoginBlock.setRoles(mUserInfo.roles);
             intent = new Intent(mContext, MainActivity.class);
             startActivity(intent);
             finish();

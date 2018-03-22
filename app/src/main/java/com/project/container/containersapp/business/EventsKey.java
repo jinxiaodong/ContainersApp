@@ -5,5 +5,6 @@ package com.project.container.containersapp.business;
  */
 
 public enum EventsKey {
-    REFRESH_CHECKBOX;   //刷新验箱列表
+    REFRESH_CHECKBOX, //刷新验箱列表
+    REFRESH_HANGINGBOX;   //刷新吊箱列表
 }
