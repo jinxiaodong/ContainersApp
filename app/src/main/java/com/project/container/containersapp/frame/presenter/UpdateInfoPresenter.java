@@ -28,6 +28,10 @@ public class UpdateInfoPresenter extends Presenter<IBaseView<UpdateInfoBean>> {
         mAuth = LoginBlock.getmAuth();
     }
 
+    /*更新当前作业过程代码*/
+    public void updateDQZYGCDM(String zydm,String zygcdm){
+
+    }
 
     /*验箱更新集装箱箱损*/
     public void CheckBoxUpdateXiangSun(String zyjzxdm, String pszt) {
@@ -44,7 +48,6 @@ public class UpdateInfoPresenter extends Presenter<IBaseView<UpdateInfoBean>> {
 
         request(url);
     }
-
 
     /*
     * 换箱
@@ -67,10 +70,16 @@ public class UpdateInfoPresenter extends Presenter<IBaseView<UpdateInfoBean>> {
 
     /*验箱通过调用*/
     public void CheckBoxPass(String zydm) {
+        String url = HttpContstants.CHECKBOX_PASS;
+        try {
+            String auth = URLEncoder.encode(mAuth, "utf-8");
+            url = HttpContstants.CHECKBOX_PASS + "?auth=" + auth;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         getmParams().clear();
-        put("auth", mAuth);
         put("zydm", zydm);
-        request(HttpContstants.CHECKBOX_PASS);
+        request(url);
     }
 
 

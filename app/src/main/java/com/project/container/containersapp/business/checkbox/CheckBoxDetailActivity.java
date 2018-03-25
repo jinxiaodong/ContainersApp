@@ -2,6 +2,7 @@ package com.project.container.containersapp.business.checkbox;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,9 +14,10 @@ import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.model.PoSunTypeBean;
 import com.project.container.containersapp.frame.model.UpdateInfoBean;
 import com.project.container.containersapp.frame.presenter.IBaseView;
+import com.project.container.containersapp.frame.presenter.UpdateInfoPresenter;
 import com.project.container.containersapp.frame.presenter.checkbox.BoxPoSunTypePresenter;
 import com.project.container.containersapp.frame.presenter.checkbox.IGetPoSunTypeView;
-import com.project.container.containersapp.frame.presenter.UpdateInfoPresenter;
+import com.project.container.containersapp.frame.utils.LogUtil;
 import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.view.NoScrollGridview;
 
@@ -59,6 +61,8 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
 
     private XSGridViewAdapter mGridViewAdapter;
     private List<PoSunTypeBean> mList;
+    /*是否换箱*/
+    private boolean isExchange;
 
     @Override
     protected int getContentLayoutId() {
@@ -74,22 +78,24 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
         mZydm = getIntent().getStringExtra(ZYDM);
 
         initPresenter();
-        mBoxPoSunTypePresenter = new BoxPoSunTypePresenter(this, this);
-        mUpdateXiangSun = new UpdateInfoPresenter(this, this);
+
     }
 
     private void initPresenter() {
-
+        mBoxPoSunTypePresenter = new BoxPoSunTypePresenter(this, this);
+        mUpdateXiangSun = new UpdateInfoPresenter(this, this);
         //验箱通过回调
         CheckBoxPass = new UpdateInfoPresenter(mContext, new IBaseView<UpdateInfoBean>() {
             @Override
             public void onSuccess(UpdateInfoBean data) {
-                //弹出确认框，提示用户提交完成，是否返回列表
+                //更新作业状态
+                ToastUtil.makeToast(mContext,"验箱成功");
             }
 
             @Override
             public void onError(String code, String msg) {
                 //弹出Toast，提示用户验箱失败原因
+                ToastUtil.makeToast(mContext,"验箱失败");
             }
         });
 
@@ -98,16 +104,16 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
             @Override
             public void onSuccess(UpdateInfoBean data) {
                 //换箱成功后直接调用验箱通过按钮，并且将
+                LogUtil.e("check_box==","==>换箱成功");
                 CheckBoxPass.CheckBoxPass(mZydm);
             }
 
             @Override
             public void onError(String code, String msg) {
                 //提示提交失败原因
+                LogUtil.e("check_box==","==>换箱失败");
             }
         });
-
-
     }
 
     @Override
@@ -125,9 +131,21 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
         mBtnCommit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String string = getXiangSunString();
-               /*如果有箱损情况：更新箱损，然后换箱，最后验箱通过*/
-                mUpdateXiangSun.CheckBoxUpdateXiangSun(mTvJzxdm.getText().toString().trim(), string);
+                /*
+                * 第一步：箱号是否为空
+                * 第二步：不为空，箱损情况是否为空，不为空，更新箱损，为空直接调用换箱
+                * 第三步：换箱
+                * 第四步：换箱成功、调用验箱通过。
+                * */
+                if (TextUtils.isEmpty(mTvJzxdmNew.getText().toString().trim())) {
+                    ToastUtil.makeToast(mContext, "请输入新箱号");
+                } else {
+                    isExchange = true;
+                    String string = getXiangSunString();
+                    mUpdateXiangSun.CheckBoxUpdateXiangSun(mTvJzxdm.getText().toString().trim(), string);
+                }
+
+
             }
         });
 
@@ -135,24 +153,20 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
         mBtnPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckBoxPass.CheckBoxPass(mZydm);
+                String xiangSunString = getXiangSunString();
+                if (TextUtils.isEmpty(xiangSunString)) {
+                    /*无箱损，直接验箱通过*/
+                    LogUtil.e("check_box==", "btn_pass_wusun");
+                    CheckBoxPass.CheckBoxPass(mZydm);
+                } else {
+                    /*有箱损先更新箱损：主要是给到达作业使用。发送作业需要换箱*/
+                    isExchange = false;
+                    mUpdateXiangSun.CheckBoxUpdateXiangSun(mTvJzxdm.getText().toString().trim(), xiangSunString);
+                }
             }
         });
     }
 
-    /*获取箱损状态*/
-    @NonNull
-    private String getXiangSunString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        int childCount = mGridView.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            CheckBox childAt = (CheckBox) mGridView.getChildAt(i);
-            if (childAt.isChecked()) {
-                stringBuilder.append(mList.get(i).name);
-            }
-        }
-        return stringBuilder.toString();
-    }
 
     @Override
     protected void initData(Bundle onSavedInstance) {
@@ -178,6 +192,32 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
         mGridView.setAdapter(mGridViewAdapter);
     }
 
+
+    /***************更新箱损信息返回结果****************/
+    @Override
+    public void onSuccess(UpdateInfoBean data) {
+        if (data.isupdate) {
+            //更新成功: 有两种情况：换箱、直接通过。
+            if (isExchange) {
+                LogUtil.e("check_box==", "更新箱损成功===>换箱");
+                String jzxdmNew = mTvJzxdmNew.getText().toString().trim();
+                String jzxdmOld = mTvJzxdm.getText().toString().trim();
+                mUpdateExchange.ExchangeBox(mZydm, jzxdmNew, jzxdmOld);
+            }else {
+                LogUtil.e("check_box==", "更新箱损成功===>验箱通过");
+                CheckBoxPass.CheckBoxPass(mZydm);
+            }
+
+        } else {
+            ToastUtil.makeToast(mContext, "提交失败！！");
+        }
+    }
+
+    @Override
+    public void onError(String code, String msg) {
+        ToastUtil.makeToast(mContext, "提交失败！！");
+    }
+
     private List<PoSunTypeBean> getDefaultData() {
         List<PoSunTypeBean> list = new ArrayList<>();
         String[] type = {"割伤", "擦伤", "破洞", "凹损", "破损", "污损", "部件缺失"};
@@ -192,20 +232,17 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
     }
 
 
-    /***************更新箱损信息返回结果****************/
-    @Override
-    public void onSuccess(UpdateInfoBean data) {
-        if (data.isupdate) {
-            //更新成功
-            ToastUtil.makeToast(mContext, "提交成功！！");
-
-        } else {
-            ToastUtil.makeToast(mContext, "提交失败！！");
+    /*获取箱损状态*/
+    @NonNull
+    private String getXiangSunString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        int childCount = mGridView.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            CheckBox childAt = (CheckBox) mGridView.getChildAt(i);
+            if (childAt.isChecked()) {
+                stringBuilder.append(mList.get(i).name);
+            }
         }
-    }
-
-    @Override
-    public void onError(String code, String msg) {
-        ToastUtil.makeToast(mContext, "提交失败！！");
+        return stringBuilder.toString();
     }
 }

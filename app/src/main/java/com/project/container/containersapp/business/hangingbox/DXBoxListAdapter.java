@@ -1,6 +1,7 @@
 package com.project.container.containersapp.business.hangingbox;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -10,7 +11,6 @@ import com.project.container.containersapp.R;
 import com.project.container.containersapp.frame.base.adapter.BaseRecyclerAdapter;
 import com.project.container.containersapp.frame.base.adapter.BaseViewHold;
 import com.project.container.containersapp.frame.model.DXBoxListBean;
-import com.project.container.containersapp.frame.utils.ToastUtil;
 
 import java.util.List;
 
@@ -22,20 +22,20 @@ import butterknife.ButterKnife;
  * description：
  */
 
-public class HangingBoxListAdapter extends BaseRecyclerAdapter<DXBoxListBean> {
+public class DXBoxListAdapter extends BaseRecyclerAdapter<DXBoxListBean> {
 
 
-    public HangingBoxListAdapter(Context context, List<DXBoxListBean> list) {
+    public DXBoxListAdapter(Context context, List<DXBoxListBean> list) {
         super(context, list);
     }
 
     @Override
     public BaseViewHold onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseViewHold hold = new HangingBoxListVH(mInflater.inflate(R.layout.hanging_box_item, parent, false));
+        BaseViewHold hold = new DXBoxListVH(mInflater.inflate(R.layout.hanging_box_item, parent, false));
         return hold;
     }
 
-    class HangingBoxListVH extends BaseViewHold<DXBoxListBean> {
+    class DXBoxListVH extends BaseViewHold<DXBoxListBean> {
 
 
         @BindView(R.id.top_divider)
@@ -53,14 +53,14 @@ public class HangingBoxListAdapter extends BaseRecyclerAdapter<DXBoxListBean> {
         @BindView(R.id.ll_line)
         LinearLayout mLlLine;
 
-        public HangingBoxListVH(View itemview) {
+        public DXBoxListVH(View itemview) {
             super(itemview);
             ButterKnife.bind(this, itemview);
         }
 
         @Override
         public void onBindViewHolder(int position, List<DXBoxListBean> mData) {
-            DXBoxListBean dxBoxListBean = mData.get(position);
+            final DXBoxListBean dxBoxListBean = mData.get(position);
             if (dxBoxListBean == null) {
                 return;
             }
@@ -89,7 +89,10 @@ public class HangingBoxListAdapter extends BaseRecyclerAdapter<DXBoxListBean> {
             mBtnHang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.makeToast(mContext, "跳转到吊箱列表");
+                    Intent intent = new Intent(mContext, DXBoxDetailActivity.class);
+//                    ToastUtil.makeToast(mContext, "跳转到吊箱列表");
+                    intent.putExtra(DXBoxDetailActivity.DX_ZYDM, dxBoxListBean.zydm);
+                    mContext.startActivity(intent);
                 }
             });
         }

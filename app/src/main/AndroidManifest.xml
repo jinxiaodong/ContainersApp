@@ -35,7 +35,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
         </activity>
-        <activity android:name=".business.hangingbox.HangingBoxActivity">
+        <activity android:name=".business.hangingbox.DXBoxListActivity">
+        </activity>
+        <activity android:name=".business.hangingbox.DXBoxDetailActivity">
+        </activity>
+        <activity android:name=".business.boxing.BoxingListActivity">
         </activity>
     </application>
 

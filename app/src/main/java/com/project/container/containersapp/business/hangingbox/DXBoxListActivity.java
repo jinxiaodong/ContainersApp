@@ -30,7 +30,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 
-public class HangingBoxActivity extends JZXBaseActivity implements IBaseListView<DXBoxListBean> {
+public class DXBoxListActivity extends JZXBaseActivity implements IBaseListView<DXBoxListBean> {
 
     @BindView(R.id.ll_title)
     LinearLayout mLlTitle;
@@ -42,7 +42,7 @@ public class HangingBoxActivity extends JZXBaseActivity implements IBaseListView
     RelativeLayout mRlHangingBox;
 
     private DXBoxListPresenter mDXBoxListPresenter;
-    private HangingBoxListAdapter mAdapter;
+    private DXBoxListAdapter mAdapter;
 
     @Override
     protected int getContentLayoutId() {
@@ -98,7 +98,7 @@ public class HangingBoxActivity extends JZXBaseActivity implements IBaseListView
     protected void initData(Bundle onSavedInstance) {
         super.initData(onSavedInstance);
 
-        mAdapter = new HangingBoxListAdapter(mContext, null);
+        mAdapter = new DXBoxListAdapter(mContext, null);
         mLoadMoreRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
         mLoadMoreRecycleView.setAdapter(mAdapter);
 

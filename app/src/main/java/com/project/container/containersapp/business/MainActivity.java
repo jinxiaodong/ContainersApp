@@ -11,8 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.container.containersapp.R;
+import com.project.container.containersapp.business.boxing.BoxingListActivity;
 import com.project.container.containersapp.business.checkbox.CheckBoxListActivilty;
-import com.project.container.containersapp.business.hangingbox.HangingBoxActivity;
+import com.project.container.containersapp.business.hangingbox.DXBoxListActivity;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.block.LoginBlock;
 import com.project.container.containersapp.frame.utils.DisplayUtil;
@@ -108,7 +109,7 @@ public class MainActivity extends JZXBaseActivity {
 
     /*跳转到对应的操作界面*/
     private void JumpToActivity(int index) {
-        ToastUtil.makeToast(mContext, mRoles.get(index));
+//        ToastUtil.makeToast(mContext, mRoles.get(index));
         String role = mRoles.get(index);
         Intent intent = null;
         switch (role) {
@@ -116,7 +117,7 @@ public class MainActivity extends JZXBaseActivity {
                 intent = new Intent(mContext, CheckBoxListActivilty.class);
                 break;
             case "吊箱":
-                intent = new Intent(mContext, HangingBoxActivity.class);
+                intent = new Intent(mContext, DXBoxListActivity.class);
 
                 break;
             case "装箱":
@@ -128,6 +129,8 @@ public class MainActivity extends JZXBaseActivity {
             case "配装":
 
                 break;
+            default:
+                intent = new Intent(mContext, BoxingListActivity.class);
         }
         if (intent != null) {
             startActivity(intent);
