@@ -78,6 +78,7 @@ public class DXBoxDetailActivity extends JZXBaseActivity {
     @Override
     protected void initListener(Bundle onSavedInstance) {
         super.initListener(onSavedInstance);
+
     }
 
     @Override
@@ -85,6 +86,14 @@ public class DXBoxDetailActivity extends JZXBaseActivity {
         super.initData(onSavedInstance);
         mLoadMoreRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
         mAdapter = new DxBoxDetailAdapter(mContext, null);
+
+        mAdapter.setOnCompleteClick(new DxBoxDetailAdapter.onCompleteClick() {
+            @Override
+            public void completeClick(int position) {
+                mAdapter.getData().get(position).dxdwcsj = "123";
+                mAdapter.notifyDataSetChanged();
+            }
+        });
         mLoadMoreRecycleView.setAdapter(mAdapter);
         mDXBoxDetailPresenter.getDetailList(mZydm);
 

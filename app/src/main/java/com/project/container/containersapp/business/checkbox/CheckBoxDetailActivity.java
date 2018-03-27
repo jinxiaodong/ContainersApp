@@ -1,16 +1,22 @@
 package com.project.container.containersapp.business.checkbox;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.project.container.containersapp.R;
 import com.project.container.containersapp.business.EventsKey;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
+import com.project.container.containersapp.frame.model.JZXAutoCompleteBean;
 import com.project.container.containersapp.frame.model.PoSunTypeBean;
 import com.project.container.containersapp.frame.model.UpdateInfoBean;
 import com.project.container.containersapp.frame.presenter.IBaseView;
@@ -20,6 +26,7 @@ import com.project.container.containersapp.frame.presenter.checkbox.IGetPoSunTyp
 import com.project.container.containersapp.frame.utils.LogUtil;
 import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.view.NoScrollGridview;
+import com.project.container.containersapp.frame.view.SelfDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,6 +52,10 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
     TextView mBtnScan;
     @BindView(R.id.btn_commit)
     TextView mBtnCommit;
+    @BindView(R.id.ll_old)
+    LinearLayout mLlOld;
+    @BindView(R.id.sv_layout)
+    ScrollView mSvLayout;
 
     private String mZydm;          //作业代码
     private String mZyjzxdm;       //作业集装箱代码
@@ -63,6 +74,10 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
     private List<PoSunTypeBean> mList;
     /*是否换箱*/
     private boolean isExchange;
+    /*新箱号选择列表*/
+    private NewJzxdmListDialog mNewJzxdmListDialog;
+    /*确认框*/
+    private SelfDialog selfDialog;
 
     @Override
     protected int getContentLayoutId() {
@@ -73,7 +88,7 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
     protected void initValue(Bundle onSavedInstance) {
         super.initValue(onSavedInstance);
         /*通知列表页返回时要刷新页面*/
-        EventBus.getDefault().post(EventsKey.REFRESH_CHECKBOX);
+
         mZyjzxdm = getIntent().getStringExtra(ZYJZXDM);
         mZydm = getIntent().getStringExtra(ZYDM);
 
@@ -89,13 +104,19 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
             @Override
             public void onSuccess(UpdateInfoBean data) {
                 //更新作业状态
-                ToastUtil.makeToast(mContext,"验箱成功");
+                showSuccessDialog();
+                EventBus.getDefault().post(EventsKey.REFRESH_CHECKBOX);
+
             }
 
             @Override
             public void onError(String code, String msg) {
-                //弹出Toast，提示用户验箱失败原因
-                ToastUtil.makeToast(mContext,"验箱失败");
+                if (isExchange) {
+
+                } else {
+                    ToastUtil.makeToast(mContext, msg);
+                }
+
             }
         });
 
@@ -104,17 +125,21 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
             @Override
             public void onSuccess(UpdateInfoBean data) {
                 //换箱成功后直接调用验箱通过按钮，并且将
-                LogUtil.e("check_box==","==>换箱成功");
+                LogUtil.e("check_box====>换箱成功", "");
                 CheckBoxPass.CheckBoxPass(mZydm);
             }
 
             @Override
             public void onError(String code, String msg) {
+                ToastUtil.makeToast(mContext, msg);
                 //提示提交失败原因
-                LogUtil.e("check_box==","==>换箱失败");
+                LogUtil.e("check_box====>换箱失败", "");
             }
         });
+
+
     }
+
 
     @Override
     protected void initWidget(Bundle onSavedInstance) {
@@ -140,9 +165,7 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
                 if (TextUtils.isEmpty(mTvJzxdmNew.getText().toString().trim())) {
                     ToastUtil.makeToast(mContext, "请输入新箱号");
                 } else {
-                    isExchange = true;
-                    String string = getXiangSunString();
-                    mUpdateXiangSun.CheckBoxUpdateXiangSun(mTvJzxdm.getText().toString().trim(), string);
+                    showConfirmCommitDialog();
                 }
 
 
@@ -156,13 +179,20 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
                 String xiangSunString = getXiangSunString();
                 if (TextUtils.isEmpty(xiangSunString)) {
                     /*无箱损，直接验箱通过*/
-                    LogUtil.e("check_box==", "btn_pass_wusun");
+                    LogUtil.e("check_box==btn_pass_wusun", "");
                     CheckBoxPass.CheckBoxPass(mZydm);
                 } else {
                     /*有箱损先更新箱损：主要是给到达作业使用。发送作业需要换箱*/
                     isExchange = false;
                     mUpdateXiangSun.CheckBoxUpdateXiangSun(mTvJzxdm.getText().toString().trim(), xiangSunString);
                 }
+            }
+        });
+
+        mBtnScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNewJzxdmSelectorDialog();
             }
         });
     }
@@ -177,7 +207,9 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
 
     @Override
     public void onPoSunTypeSuccess(List<PoSunTypeBean> list) {
+        mSvLayout.setVisibility(View.VISIBLE);
         dismissDialog();
+
         mList = list;
         mGridViewAdapter = new XSGridViewAdapter(mContext, mList);
         mGridView.setAdapter(mGridViewAdapter);
@@ -185,6 +217,7 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
 
     @Override
     public void onPoSunError(String code, String msg) {
+        mSvLayout.setVisibility(View.VISIBLE);
         dismissDialog();
         /*如果获取箱损失败，那么就按照目前的七种默认数据*/
         mList = getDefaultData();
@@ -193,18 +226,18 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
     }
 
 
-    /***************更新箱损信息返回结果****************/
+    /***************start-更新箱损信息返回结果****************/
     @Override
     public void onSuccess(UpdateInfoBean data) {
         if (data.isupdate) {
             //更新成功: 有两种情况：换箱、直接通过。
             if (isExchange) {
-                LogUtil.e("check_box==", "更新箱损成功===>换箱");
+                LogUtil.e("check_box==更新箱损成功===>换箱", "");
                 String jzxdmNew = mTvJzxdmNew.getText().toString().trim();
                 String jzxdmOld = mTvJzxdm.getText().toString().trim();
                 mUpdateExchange.ExchangeBox(mZydm, jzxdmNew, jzxdmOld);
-            }else {
-                LogUtil.e("check_box==", "更新箱损成功===>验箱通过");
+            } else {
+                LogUtil.e("check_box==更新箱损成功===>验箱通过", "");
                 CheckBoxPass.CheckBoxPass(mZydm);
             }
 
@@ -217,6 +250,9 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
     public void onError(String code, String msg) {
         ToastUtil.makeToast(mContext, "提交失败！！");
     }
+
+    /**********************end-更新箱损信息返回结果*************************/
+
 
     private List<PoSunTypeBean> getDefaultData() {
         List<PoSunTypeBean> list = new ArrayList<>();
@@ -245,4 +281,89 @@ public class CheckBoxDetailActivity extends JZXBaseActivity implements IGetPoSun
         }
         return stringBuilder.toString();
     }
+
+
+    /*新箱号查询结果列表*/
+    private void showNewJzxdmSelectorDialog() {
+        if (null != mNewJzxdmListDialog && mNewJzxdmListDialog.isShowing()) {
+            return;
+        }
+        String search = mTvJzxdmNew.getText().toString().trim();
+        if (TextUtils.isEmpty(search)) {
+            ToastUtil.makeToast(mContext, "请输入查询箱号的关键字");
+            return;
+        }
+        mNewJzxdmListDialog = new NewJzxdmListDialog(this, Gravity.BOTTOM, true, search, new NewJzxdmListDialog.OnJzxdmItemClickListener() {
+            @Override
+            public void onItemClick(JZXAutoCompleteBean jzxAutoCompleteBean) {
+                mTvJzxdmNew.setText(jzxAutoCompleteBean.value);
+                mTvJzxdmNew.setSelection(mTvJzxdmNew.getText().length());
+                //     ToastUtil.makeToast(mContext, jzxAutoCompleteBean.value);
+            }
+        });
+        mNewJzxdmListDialog.show();
+    }
+
+    /*验箱成功的确认框*/
+    private void showSuccessDialog() {
+
+        if (selfDialog == null) {
+            selfDialog = new SelfDialog(mContext, true);
+        }
+        selfDialog.setMessage("验箱成功，是否返回验箱列表页？");
+
+        selfDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                selfDialog.dismiss();
+                finish();
+            }
+        });
+        selfDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                dismissDialog();
+            }
+        });
+        selfDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return true;
+            }
+        });
+        selfDialog.show();
+    }
+
+    /*提交确认框*/
+    private void showConfirmCommitDialog() {
+
+        if (selfDialog == null) {
+            selfDialog = new SelfDialog(mContext, true);
+        }
+        selfDialog.setMessage("确认提交？");
+
+        selfDialog.setYesOnclickListener("确定", new SelfDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                selfDialog.dismiss();
+                isExchange = true;
+                String string = getXiangSunString();
+                mUpdateXiangSun.CheckBoxUpdateXiangSun(mTvJzxdm.getText().toString().trim(), string);
+            }
+        });
+        selfDialog.setNoOnclickListener("取消", new SelfDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                selfDialog.dismiss();
+            }
+        });
+        selfDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                return true;
+            }
+        });
+        selfDialog.show();
+    }
+
 }

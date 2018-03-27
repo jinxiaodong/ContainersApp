@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.project.container.containersapp.R;
 import com.project.container.containersapp.business.boxing.BoxingListActivity;
 import com.project.container.containersapp.business.checkbox.CheckBoxListActivilty;
+import com.project.container.containersapp.business.checkgoods.CheckGoodsListActivity;
 import com.project.container.containersapp.business.hangingbox.DXBoxListActivity;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.block.LoginBlock;
@@ -128,6 +129,12 @@ public class MainActivity extends JZXBaseActivity {
                 break;
             case "配装":
 
+                break;
+            case "门卫":
+                intent = new Intent(mContext, CheckGoodsListActivity.class);
+                break;
+            case "关闭":
+                finish();
                 break;
             default:
                 intent = new Intent(mContext, BoxingListActivity.class);

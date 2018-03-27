@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_checkbox"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.project.container.containersapp.business.checkbox.CheckBoxListActivilty">
+
+
+    <com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/padding_44dp"
+                android:background="@color/list_title"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+
+                <View
+                    android:layout_width="@dimen/padding_0.5dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/divider">
+                </View>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:text="运单号/箱号"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
+
+                <View
+                    android:layout_width="@dimen/padding_0.5dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/divider">
+
+                </View>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:text="箱区箱位"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
+
+                <View
+                    android:layout_width="@dimen/padding_0.5dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/divider">
+
+                </View>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="1.4"
+                    android:gravity="center"
+                    android:text="货物名称"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
+
+                <View
+                    android:layout_width="@dimen/padding_0.5dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/divider">
+                </View>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:layout_weight="1.0"
+                    android:gravity="center"
+                    android:text="操作"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_18sp"/>
+
+                <View
+                    android:layout_width="@dimen/padding_0.5dp"
+                    android:layout_height="@dimen/padding_44dp"
+                    android:background="@color/divider">
+                </View>
+            </LinearLayout>
+
+            <com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView
+                android:id="@+id/loadMoreRecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+            </com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView>
+
+        </LinearLayout>
+
+    </com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout>
+
+</RelativeLayout>

@@ -3,7 +3,12 @@
     android:id="@+id/cb_xs"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/padding_5dp"
-    android:text="割伤">
+    android:layout_marginBottom="@dimen/padding_10dp"
+    android:button="@null"
+    android:drawableLeft="@drawable/checkbox_selector"
+    android:drawablePadding="@dimen/padding_7dp"
+    android:text="割伤"
+    android:textColor="@color/main_blue"
+    android:textSize="@dimen/font_15sp">
 
 </CheckBox>

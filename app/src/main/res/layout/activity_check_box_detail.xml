@@ -2,9 +2,12 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sv_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/jzx_bg">
+    android:background="@mipmap/jzx_bg"
+    android:visibility="invisible"
+    tools:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,12 +53,12 @@
                 android:layout_below="@id/ll_old"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/padding_15dp"
-                android:background="@drawable/button_shape">
+                >
 
                 <TextView
                     android:id="@+id/btn_pass"
                     android:layout_width="130dp"
-                    android:layout_height="@dimen/padding_50dp"
+                    android:layout_height="@dimen/padding_40dp"
                     android:background="@drawable/button_press_selector"
                     android:gravity="center"
                     android:text="验箱通过"
@@ -89,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/width_height_75dp"
                     android:numColumns="3"
-                    android:paddingLeft="@dimen/padding_30dp"
+                    android:paddingLeft="@dimen/padding_34dp"
                     >
 
                 </com.project.container.containersapp.frame.view.NoScrollGridview>
@@ -98,6 +101,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/padding_25dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -106,18 +111,18 @@
                         android:layout_height="wrap_content"
                         android:text="新箱号"
                         android:textColor="@color/main_blue"
-                        android:textSize="@dimen/font_20sp"/>
+                        android:textSize="@dimen/font_18sp"/>
 
                     <EditText
                         android:id="@+id/tv_jzxdm_new"
-                        android:layout_width="170dp"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/padding_20dp"
+                        android:layout_marginLeft="@dimen/padding_15dp"
                         android:background="@drawable/text_shape_white"
-                        android:paddingBottom="@dimen/padding_7dp"
+                        android:paddingBottom="@dimen/padding_4dp"
                         android:paddingLeft="@dimen/padding_15dp"
                         android:paddingRight="15dp"
-                        android:paddingTop="@dimen/padding_7dp"
+                        android:paddingTop="@dimen/padding_4dp"
                         android:singleLine="true"
                         android:textColor="@color/main_blue"
                         android:textSize="@dimen/font_20sp"
@@ -139,12 +144,12 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_jzxdm"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/button_shape">
+                        >
 
                         <TextView
                             android:id="@+id/btn_scan"
                             android:layout_width="130dp"
-                            android:layout_height="@dimen/padding_50dp"
+                            android:layout_height="@dimen/padding_40dp"
                             android:background="@mipmap/btn_bg_press"
                             android:gravity="center"
                             android:text="扫描换箱"
@@ -158,12 +163,12 @@
                         android:layout_below="@id/tv_jzxdm"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/padding_20dp"
-                        android:background="@drawable/button_shape">
+                        >
 
                         <TextView
                             android:id="@+id/btn_commit"
                             android:layout_width="130dp"
-                            android:layout_height="@dimen/padding_50dp"
+                            android:layout_height="@dimen/padding_40dp"
                             android:background="@drawable/button_press_selector"
                             android:gravity="center"
                             android:text="提 交"

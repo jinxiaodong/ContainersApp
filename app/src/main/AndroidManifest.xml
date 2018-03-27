@@ -41,6 +41,10 @@
         </activity>
         <activity android:name=".business.boxing.BoxingListActivity">
         </activity>
+        <activity android:name=".business.checkgoods.CheckGoodsListActivity">
+        </activity>
+        <activity android:name=".business.checkgoods.CheckGoodsDetailActivity">
+        </activity>
     </application>
 
 </manifest>

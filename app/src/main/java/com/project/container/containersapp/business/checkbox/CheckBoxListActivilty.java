@@ -14,7 +14,6 @@ import com.project.container.containersapp.frame.model.CheckBoxListBean;
 import com.project.container.containersapp.frame.presenter.IBaseListView;
 import com.project.container.containersapp.frame.presenter.checkbox.CheckBoxListPresenter;
 import com.project.container.containersapp.frame.utils.SystemBarUtil;
-import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout;
 import com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView;
 import com.project.container.containersapp.frame.view.recycleview.OnLoadMoreListener;
@@ -124,7 +123,7 @@ public class CheckBoxListActivilty extends JZXBaseActivity implements IBaseListV
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventsKey event) {
         if (event == EventsKey.REFRESH_CHECKBOX) {
-            ToastUtil.makeToast(mContext, "lalal");
+//            ToastUtil.makeToast(mContext, "lalal");
             mCheckBoxListPresenter.getListData();
         }
     }
