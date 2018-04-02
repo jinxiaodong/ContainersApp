@@ -18,6 +18,7 @@
     <string name="loading_view_net_error">网络异常，点击重试</string>
 
     <string name="check_box_success">验箱成功，是否返回验箱列表页？</string>
+    <string name="check_goods_success">检斤验货成功，是否返回检斤验货列表页？</string>
     <string name="confirm_commit">确认提交？</string>
     <string name="dx_success">吊箱成功，是否返回吊箱箱列表页？</string>
     <string name="data_error">数据有误，是否返回列表页？</string>

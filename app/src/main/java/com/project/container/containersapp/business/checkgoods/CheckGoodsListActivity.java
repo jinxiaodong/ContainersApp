@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.project.container.containersapp.R;
+import com.project.container.containersapp.business.EventsKey;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.model.CheckGoodsListBean;
 import com.project.container.containersapp.frame.model.UpdateInfoBean;
@@ -21,6 +22,10 @@ import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout;
 import com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView;
 import com.project.container.containersapp.frame.view.recycleview.OnLoadMoreListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -54,6 +59,7 @@ public class CheckGoodsListActivity extends JZXBaseActivity implements IBaseList
     @Override
     protected void initValue(Bundle onSavedInstance) {
         super.initValue(onSavedInstance);
+        EventBus.getDefault().register(this);
         mCheckGoodsListPresenter = new CheckGoodsListPresenter(mContext, this);
         mUpdateZygcdm = new UpdateInfoPresenter(mContext, new IBaseView<UpdateInfoBean>() {
             @Override
@@ -112,12 +118,12 @@ public class CheckGoodsListActivity extends JZXBaseActivity implements IBaseList
             @Override
             public void onItemClick(int position) {
                 CheckGoodsListBean checkGoodsListBean = mAdapter.getData().get(position);
-                if(checkGoodsListBean != null) {
+                if (checkGoodsListBean != null) {
                     Intent intent = new Intent(mContext, CheckGoodsDetailActivity.class);
                     intent.putExtra(CheckGoodsDetailActivity.GOODS_DATA, checkGoodsListBean);
                     startActivity(intent);
-                }else {
-                    ToastUtil.makeToast(mContext,"该条数据无效，请刷新列表");
+                } else {
+                    ToastUtil.makeToast(mContext, "该条数据无效，请刷新列表");
                 }
                 //                showDialog();
 //                mUpdateZygcdm.updateDQZYGCDM(checkGoodsListBean.zydm, "00");
@@ -134,6 +140,13 @@ public class CheckGoodsListActivity extends JZXBaseActivity implements IBaseList
         getListData();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(EventsKey event) {
+        if (event == EventsKey.REFRESH_CHECKGOODS) {
+//            ToastUtil.makeToast(mContext, "lalal");
+            getListData();
+        }
+    }
 
     private void getListData() {
         mCheckGoodsListPresenter.getListData();

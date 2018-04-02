@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.project.container.containersapp.R;
+import com.project.container.containersapp.business.EventsKey;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.model.CheckGoodsListBean;
 import com.project.container.containersapp.frame.model.UpdateInfoBean;
@@ -20,6 +21,8 @@ import com.project.container.containersapp.frame.utils.SelfDialogUtils;
 import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.utils.WeightInputFilter;
 import com.project.container.containersapp.frame.view.SelfDialog;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 
@@ -44,7 +47,7 @@ public class CheckGoodsDetailActivity extends JZXBaseActivity implements IBaseVi
     private SelfDialog selfDialog;
 
     private UpdateInfoPresenter mCommitPresenter;
-    private UpdateInfoPresenter mUpdateZygcdm;
+//    private UpdateInfoPresenter mUpdateZygcdm;
 
     /*解决两个TextView互相监听造成的死循环*/
     private boolean flag = true;
@@ -63,17 +66,17 @@ public class CheckGoodsDetailActivity extends JZXBaseActivity implements IBaseVi
         }
 
         mCommitPresenter = new UpdateInfoPresenter(mContext, this);
-        mUpdateZygcdm = new UpdateInfoPresenter(mContext, new IBaseView<UpdateInfoBean>() {
-            @Override
-            public void onSuccess(UpdateInfoBean data) {
-                //更新作业状态成功
-            }
-
-            @Override
-            public void onError(String code, String msg) {
-
-            }
-        });
+//        mUpdateZygcdm = new UpdateInfoPresenter(mContext, new IBaseView<UpdateInfoBean>() {
+//            @Override
+//            public void onSuccess(UpdateInfoBean data) {
+//                //更新作业状态成功
+//            }
+//
+//            @Override
+//            public void onError(String code, String msg) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -215,11 +218,24 @@ public class CheckGoodsDetailActivity extends JZXBaseActivity implements IBaseVi
     @Override
     public void onSuccess(UpdateInfoBean data) {
 
-        ToastUtil.makeToast(mContext,"提交成功");
+        EventBus.getDefault().post(EventsKey.REFRESH_CHECKGOODS);
+        selfDialog = SelfDialogUtils.showSelfDialog(selfDialog, mContext, getResString(R.string.check_goods_success), new SelfDialog.onClickListener() {
+            @Override
+            public void onYesClick() {
+                selfDialog.dismiss();
+                finish();
+            }
+
+            @Override
+            public void onNoClick() {
+                selfDialog.dismiss();
+            }
+        });
+        //        ToastUtil.makeToast(mContext,"提交成功");
     }
 
     @Override
     public void onError(String code, String msg) {
-        ToastUtil.makeToast(mContext,"提交失败");
+        ToastUtil.makeToast(mContext, "提交失败");
     }
 }
