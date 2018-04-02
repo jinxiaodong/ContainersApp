@@ -98,7 +98,7 @@ public class DXBoxDetailActivity extends JZXBaseActivity implements IListView<DX
                             mUpdateZygcdm.updateDQZYGCDM(mZydm, dxdzygclxdm);
                         }
                         /*测试用 ，发布删除*/
-                        mUpdateZygcdm.updateDQZYGCDM(mZydm, "03");
+//                        mUpdateZygcdm.updateDQZYGCDM(mZydm, "03");
                     }
                     mAdapter.getData().get(clickPosition).dxdwcsj = System.currentTimeMillis() + "";
                     mAdapter.notifyDataSetChanged();
