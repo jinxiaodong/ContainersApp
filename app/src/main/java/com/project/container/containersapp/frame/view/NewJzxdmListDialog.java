@@ -1,4 +1,4 @@
-package com.project.container.containersapp.business.checkbox;
+package com.project.container.containersapp.frame.view;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.LinearLayout;
 
 import com.project.container.containersapp.R;
+import com.project.container.containersapp.business.checkbox.DialogListAdapter;
 import com.project.container.containersapp.frame.base.BaseDialog;
 import com.project.container.containersapp.frame.base.adapter.HeaderAndFooterRecyclerViewAdapter;
 import com.project.container.containersapp.frame.constants.DeviceInfo;
@@ -18,9 +19,9 @@ import com.project.container.containersapp.frame.view.recycleview.LoadMoreRecycl
 import java.util.List;
 
 /**
- * Created by xiaodong.jin on 2017/5/10.
+ * Created by xiaodong.jin on 2018/3/25.
+ * description：
  */
-
 public class NewJzxdmListDialog extends BaseDialog {
 
     private LoadMoreRecyclerView loadMoreRecyclerView;
@@ -29,7 +30,7 @@ public class NewJzxdmListDialog extends BaseDialog {
 
     private OnJzxdmItemClickListener mJzxdmItemClickListener;
     private AutoCompletePresenter mPresenter;
-    private String mJzxdmKeys = "TB";
+    private String mJzxdmKeys = "";
     private DialogListAdapter mAdapter;
 
     public NewJzxdmListDialog(Context context, int gravity, boolean horizontalFullScreen, String keys, OnJzxdmItemClickListener mJzxdmItemClickListener) {
@@ -37,6 +38,10 @@ public class NewJzxdmListDialog extends BaseDialog {
         this.mJzxdmItemClickListener = mJzxdmItemClickListener;
         mJzxdmKeys = keys;
 
+        initValue();
+        initWidget();
+        initListener();
+        initData();
     }
 
     @Override

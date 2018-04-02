@@ -105,4 +105,8 @@ public class LoginBlock {
     }
 
 
+    /*清楚sp存储*/
+    public  static void LoginOut(){
+        PreferencesUtils.clearSpData(JZXApplication.getInstance());
+    }
 }

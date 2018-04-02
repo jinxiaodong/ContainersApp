@@ -51,6 +51,9 @@ public class JZXBaseActivity extends BaseActivity {
     /*右边按钮*/
     private TextView rightTxt;
 
+    /*右边menu*/
+    private ImageView ivMenu;
+
     /**
      * 页面header布局
      */
@@ -125,6 +128,7 @@ public class JZXBaseActivity extends BaseActivity {
 
                 imageBack = (ImageView) findViewById(R.id.title_bar_back);
                 rightTxt = (TextView) findViewById(R.id.title_bar_ok);
+                ivMenu = findViewById(R.id.iv_menu);
             }
             mLinWrapper = (LinearLayout) findViewById(R.id.lin_wrapper);
         } catch (Exception e) {
@@ -152,9 +156,23 @@ public class JZXBaseActivity extends BaseActivity {
                     }
                 });
             }
+            if (getHeaderView() != null && ivMenu != null) {
+                ivMenu.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        onMenuClick(v);
+                    }
+                });
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /*菜单点击事件*/
+    public void onMenuClick(View v) {
+
     }
 
     @Override
@@ -402,6 +420,21 @@ public class JZXBaseActivity extends BaseActivity {
         }
     }
 
+
+    public void showOrHideMenuButton(int viewState) {
+        if (getHeaderView() == null) {
+            return;
+        }
+        try {
+            if (ivMenu == null) {
+                ivMenu = findViewById(R.id.iv_menu);
+            }
+            ivMenu.setVisibility(viewState);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * @param
      * @return
@@ -489,15 +522,20 @@ public class JZXBaseActivity extends BaseActivity {
      * 显示默认等待框
      */
     public void showDialog() {
-        showDialog("");
+        showDialog("", true);
     }
 
-    public void showDialog(final String msg) {
+    /*等待框是否可点击取消*/
+    public void showDialog(boolean cancelable) {
+        showDialog("", cancelable);
+    }
+
+    public void showDialog(final String msg, final boolean cancelable) {
         getHandler().post(new Runnable() {
             @Override
             public void run() {
                 if (!JZXBaseActivity.this.isFinishing()) {
-                    DialogUtils.showDialog(mContext, true, msg);
+                    DialogUtils.showDialog(mContext, cancelable, msg);
                 }
             }
         });

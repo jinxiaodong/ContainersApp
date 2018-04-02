@@ -53,7 +53,7 @@ public class CheckBoxListPresenter extends Presenter<IBaseListView<CheckBoxListB
         put("page", page);
         put("pagesize", pagesize);
         /*0:表示请求全部数据，1表示请求发送作业，2表示请求到达作业*/
-        put("zytype","0");
+        put("zytype", "0");
 
         mRequest.url(HttpContstants.CHECK_BOX)
                 .params(mParams)
@@ -64,6 +64,14 @@ public class CheckBoxListPresenter extends Presenter<IBaseListView<CheckBoxListB
                     public void onSuccess(ResponseData result) {
                         if ("200".equals(result.code)) {
                             CheckBoxListBean checkBoxListBean = (CheckBoxListBean) result.data;
+                            if (checkBoxListBean == null) {
+                                if (isLoadMore) {
+                                    mvpView.onLoadMoreError(result.code, result.message);
+                                    return;
+                                }
+                                mvpView.onEmpty();
+                                return;
+                            }
                             List<CheckBoxListBean> list = checkBoxListBean.list;
                             if (list != null && list.size() > 0) {
                                 mvpView.onHasNext(checkBoxListBean.isHasNext());

@@ -23,7 +23,7 @@
     <com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView
         android:id="@+id/loadMoreRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/white">
 
     </com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView>

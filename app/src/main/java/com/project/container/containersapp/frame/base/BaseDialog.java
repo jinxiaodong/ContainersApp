@@ -35,10 +35,7 @@ public abstract class BaseDialog extends Dialog {
         }
         params.gravity = gravity;
         window.setAttributes(params);
-        initValue();
-        initWidget();
-        initListener();
-        initData();
+
     }
 
     protected void initValue() {

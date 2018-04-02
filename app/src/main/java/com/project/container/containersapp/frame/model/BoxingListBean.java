@@ -7,9 +7,14 @@ import com.project.container.containersapp.frame.base.BaseListBean;
  * description：
  */
 
-public class BoxingListBean extends BaseListBean<BoxingListBean>{
+public class BoxingListBean extends BaseListBean<BoxingListBean> {
 
-    public String ydh;
-    public String jzxdm;
-    public String name;
+    public String zydm;
+    public String zyydaid;
+    public String zyjzxdm;
+    public String zydqzygcdm;
+    public String zyhwmc;
+    public String zyzxdd;
+
+
 }

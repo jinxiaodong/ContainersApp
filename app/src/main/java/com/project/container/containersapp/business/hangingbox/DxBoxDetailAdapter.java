@@ -28,6 +28,9 @@ public class DxBoxDetailAdapter extends BaseRecyclerAdapter<DXBoxDetailsBean> {
 
     private onCompleteClick mOnCompleteClick;
 
+    //是否是最后一步点击
+    public boolean isLastClick;
+
     public DxBoxDetailAdapter(Context context, List<DXBoxDetailsBean> list) {
         super(context, list);
     }
@@ -62,13 +65,15 @@ public class DxBoxDetailAdapter extends BaseRecyclerAdapter<DXBoxDetailsBean> {
         @BindView(R.id.ll_line)
         LinearLayout mLlLine;
 
+
         public DXBoxLDetailVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         @Override
-        public void onBindViewHolder(final int position, List<DXBoxDetailsBean> mData) {
+        public void onBindViewHolder(final int position, final List<DXBoxDetailsBean> mData) {
+
             DXBoxDetailsBean dxBoxDetailsBean = mData.get(position);
 
             if (dxBoxDetailsBean == null) {
@@ -108,6 +113,9 @@ public class DxBoxDetailAdapter extends BaseRecyclerAdapter<DXBoxDetailsBean> {
                 public void onClick(View v) {
 //                    ToastUtil.makeToast(mContext, "完成第" + (position + 1) + "步");
                     mOnCompleteClick.completeClick(position);
+                    if (position == mData.size() - 1) {
+                        isLastClick = true;
+                    }
                 }
             });
 
@@ -117,7 +125,7 @@ public class DxBoxDetailAdapter extends BaseRecyclerAdapter<DXBoxDetailsBean> {
                 mIvComplete.setVisibility(View.VISIBLE);
                 mBtnFinish.setVisibility(View.GONE);
                 //如果最后一个数据也是操作过，这里防止脏数据，按道理是不会出现的，以防万一，可以重新提交一次
-                if (position == mData.size() - 1) {
+                if (position == mData.size() - 1 && !isLastClick) {
                     mIvComplete.setVisibility(View.INVISIBLE);
                     mBtnFinish.setVisibility(View.VISIBLE);
                 }

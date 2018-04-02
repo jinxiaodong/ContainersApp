@@ -65,6 +65,14 @@ public class DXBoxListPresenter extends Presenter<IBaseListView<DXBoxListBean>> 
                     public void onSuccess(ResponseData result) {
                         if ("200".equals(result.code)) {
                             DXBoxListBean dxBoxListBean = (DXBoxListBean) result.data;
+                            if (dxBoxListBean == null) {
+                                if (isLoadMore) {
+                                    mvpView.onLoadMoreError(result.code, result.message);
+                                    return;
+                                }
+                                mvpView.onEmpty();
+                                return;
+                            }
                             List<DXBoxListBean> list = dxBoxListBean.list;
                             if (list != null && list.size() > 0) {
                                 mvpView.onHasNext(dxBoxListBean.isHasNext());

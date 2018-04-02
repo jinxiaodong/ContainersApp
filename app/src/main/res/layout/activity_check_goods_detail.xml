@@ -1,9 +1,207 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/jzx_bg"
     tools:context="com.project.container.containersapp.business.checkgoods.CheckGoodsDetailActivity">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_30dp"
+        android:background="@mipmap/card_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingBottom="40dp"
+        android:paddingTop="@dimen/padding_26dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="箱号："
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_20sp"/>
+
+            <TextView
+                android:id="@+id/tv_jzxdm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TBJU1100112"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_20sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_25dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="箱货总重（千克）"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_18sp"/>
+
+            <EditText
+                android:id="@+id/et_all_kg"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10dp"
+                android:background="@drawable/text_shape_white"
+                android:inputType="numberDecimal"
+                android:paddingBottom="@dimen/padding_4dp"
+
+                android:paddingLeft="@dimen/padding_15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="@dimen/padding_4dp"
+                android:singleLine="true"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_20sp"
+                tools:text="1.8"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_25dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="承运人重量（千克）"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_18sp"/>
+
+            <EditText
+                android:id="@+id/et_cyr_kg"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10dp"
+                android:background="@drawable/text_shape_white"
+                android:inputType="numberDecimal"
+                android:paddingBottom="@dimen/padding_4dp"
+                android:paddingLeft="@dimen/padding_15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="@dimen/padding_4dp"
+                android:singleLine="true"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_20sp"
+                tools:text="1.8"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_25dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="托运人重量（千克）"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_18sp"/>
+
+            <TextView
+                android:id="@+id/et_tyr_kg"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10dp"
+                android:background="@drawable/text_shape_white"
+                android:inputType="numberDecimal"
+                android:paddingBottom="@dimen/padding_4dp"
+                android:paddingLeft="@dimen/padding_15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="@dimen/padding_4dp"
+                android:singleLine="true"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_20sp"
+                tools:text="1.8"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/padding_15dp"
+            android:layout_marginTop="@dimen/padding_25dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="施封号  "
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_18sp"/>
+
+            <EditText
+                android:id="@+id/et_sfh"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_10dp"
+                android:background="@drawable/text_shape_white"
+                android:paddingBottom="@dimen/padding_4dp"
+                android:paddingLeft="@dimen/padding_15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="@dimen/padding_4dp"
+                android:singleLine="true"
+                android:textColor="@color/main_blue"
+                android:textSize="@dimen/font_20sp"
+                tools:text="1.8"/>
+
+        </LinearLayout>
+        <!--android:inputType="number"-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_50dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/btn_commit"
+                android:layout_width="180dp"
+                android:layout_height="@dimen/padding_45dp"
+                android:background="@drawable/button_press_selector"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="提 交"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

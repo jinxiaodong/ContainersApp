@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.project.container.containersapp.R;
+import com.project.container.containersapp.business.boxing.BoxingListActivity;
+import com.project.container.containersapp.business.checkbox.CheckBoxListActivilty;
+import com.project.container.containersapp.business.checkgoods.CheckGoodsListActivity;
+import com.project.container.containersapp.business.hangingbox.DXBoxListActivity;
 import com.project.container.containersapp.frame.base.JZXBaseActivity;
 import com.project.container.containersapp.frame.block.LoginBlock;
 import com.project.container.containersapp.frame.model.UserInfoBean;
@@ -166,10 +170,46 @@ public class LoginActivity extends JZXBaseActivity implements View.OnClickListen
             finish();
         } else if (size == 1) {
             //根据具体角色跳转到相应操作页面
-
+            JumpToActivity(mUserInfo.roles.get(0).trim());
             finish();
         } else {
             //跳转到一个空页面提示该角色无权限。
+            JumpToActivity("NoRole");
         }
     }
+
+    /*跳转到对应的操作界面*/
+    private void JumpToActivity(String role) {
+//        ToastUtil.makeToast(mContext, mRoles.get(index));
+        Intent intent = null;
+        switch (role) {
+            case "验箱":
+                intent = new Intent(mContext, CheckBoxListActivilty.class);
+                break;
+            case "吊箱":
+                intent = new Intent(mContext, DXBoxListActivity.class);
+                break;
+            case "装箱":
+                intent = new Intent(mContext, BoxingListActivity.class);
+                break;
+            case "检斤验货":
+                intent = new Intent(mContext, CheckGoodsListActivity.class);
+                break;
+            case "配装":
+                ToastUtil.makeToast(mContext, "该功能暂未开放！");
+                break;
+            case "门卫":
+                ToastUtil.makeToast(mContext, "该功能暂未开放！");
+                break;
+            case "NoRole":
+                intent = new Intent(mContext, NoRolesActivity.class);
+                break;
+            default:
+                ToastUtil.makeToast(mContext, "该功能暂未开放！");
+        }
+        if (intent != null) {
+            startActivity(intent);
+        }
+    }
+
 }

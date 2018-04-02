@@ -20,34 +20,24 @@ public class SelfDialog extends Dialog {
     private String yesStr, noStr;
     private String okColor, cancelColor;
 
-    private onNoOnclickListener noOnclickListener;//取消按钮被点击了的监听器
-    private onYesOnclickListener yesOnclickListener;//确定按钮被点击了的监听器
+    private onClickListener mOnclickListener;
 
     /**
      * 设置取消按钮的显示内容和监听
      *
-     * @param str
-     * @param onNoOnclickListener
+     * @param yesStr
+     * @param OnclickListener
      */
-    public void setNoOnclickListener(String str, onNoOnclickListener onNoOnclickListener) {
-        if (str != null) {
-            noStr = str;
+    public void setOnclickListener(String yesStr, String noStr, onClickListener OnclickListener) {
+        if (yesStr != null) {
+            this.yesStr = yesStr;
         }
-        this.noOnclickListener = onNoOnclickListener;
+        if (noStr != null) {
+            this.noStr = noStr;
+        }
+        this.mOnclickListener = OnclickListener;
     }
 
-    /**
-     * 设置确定按钮的显示内容和监听
-     *
-     * @param str
-     * @param onYesOnclickListener
-     */
-    public void setYesOnclickListener(String str, onYesOnclickListener onYesOnclickListener) {
-        if (str != null) {
-            yesStr = str;
-        }
-        this.yesOnclickListener = onYesOnclickListener;
-    }
 
     public SelfDialog(Context context) {
         super(context, R.style.MyDialog);
@@ -102,8 +92,8 @@ public class SelfDialog extends Dialog {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (yesOnclickListener != null) {
-                    yesOnclickListener.onYesClick();
+                if (mOnclickListener != null) {
+                    mOnclickListener.onYesClick();
                 }
             }
         });
@@ -111,8 +101,8 @@ public class SelfDialog extends Dialog {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (noOnclickListener != null) {
-                    noOnclickListener.onNoClick();
+                if (mOnclickListener != null) {
+                    mOnclickListener.onNoClick();
                 }
             }
         });
@@ -175,11 +165,11 @@ public class SelfDialog extends Dialog {
     /**
      * 设置确定按钮和取消被点击的接口
      */
-    public interface onYesOnclickListener {
-        public void onYesClick();
+    public interface onClickListener {
+        void onYesClick();
+
+        void onNoClick();
     }
 
-    public interface onNoOnclickListener {
-        public void onNoClick();
-    }
+
 }

@@ -40,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColor="@color/gray_333333"
-                android:textSize="@dimen/font_15sp"
-                tools:text="qqq123123123123"/>
+                android:textSize="@dimen/font_16sp"
+                tools:text="qqq123123123"/>
 
             <TextView
                 android:id="@+id/tv_zyjzxdm"
@@ -106,7 +106,7 @@
                 android:paddingBottom="@dimen/padding_3dp"
                 android:paddingTop="@dimen/padding_3dp"
                 android:singleLine="true"
-                android:text="验箱"
+                android:text="完成"
                 android:textColor="@color/white"
                 android:textSize="@dimen/font_17sp"/>
 

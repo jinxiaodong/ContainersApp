@@ -14,7 +14,6 @@ import com.project.container.containersapp.frame.model.DXBoxListBean;
 import com.project.container.containersapp.frame.presenter.IBaseListView;
 import com.project.container.containersapp.frame.presenter.hangingbox.DXBoxListPresenter;
 import com.project.container.containersapp.frame.utils.SystemBarUtil;
-import com.project.container.containersapp.frame.utils.ToastUtil;
 import com.project.container.containersapp.frame.view.pulltorefresh.PullToRefreshFrameLayout;
 import com.project.container.containersapp.frame.view.recycleview.LoadMoreRecyclerView;
 import com.project.container.containersapp.frame.view.recycleview.OnLoadMoreListener;
@@ -65,6 +64,9 @@ public class DXBoxListActivity extends JZXBaseActivity implements IBaseListView<
         SystemBarUtil.tintStatusBar(this, Color.parseColor(getResString(R.color.main_blue)), 0);
 
         mLoadMoreRecycleView.setHasLoadMore(false);
+        mAdapter = new DXBoxListAdapter(mContext, null);
+        mLoadMoreRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
+        mLoadMoreRecycleView.setAdapter(mAdapter);
     }
 
     @Override
@@ -98,10 +100,6 @@ public class DXBoxListActivity extends JZXBaseActivity implements IBaseListView<
     protected void initData(Bundle onSavedInstance) {
         super.initData(onSavedInstance);
 
-        mAdapter = new DXBoxListAdapter(mContext, null);
-        mLoadMoreRecycleView.setLayoutManager(new LinearLayoutManager(mContext));
-        mLoadMoreRecycleView.setAdapter(mAdapter);
-
         showDialog();
         getListData();
     }
@@ -117,7 +115,6 @@ public class DXBoxListActivity extends JZXBaseActivity implements IBaseListView<
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(EventsKey event) {
         if (event == EventsKey.REFRESH_HANGINGBOX) {
-            ToastUtil.makeToast(mContext, "刷新吊箱");
             getListData();
         }
     }

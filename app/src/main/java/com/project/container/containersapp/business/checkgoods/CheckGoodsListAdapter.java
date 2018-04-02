@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.project.container.containersapp.R;
 import com.project.container.containersapp.frame.base.adapter.BaseRecyclerAdapter;
 import com.project.container.containersapp.frame.base.adapter.BaseViewHold;
-import com.project.container.containersapp.frame.model.CheckBoxListBean;
 import com.project.container.containersapp.frame.model.CheckGoodsListBean;
 
 import java.util.List;
@@ -22,10 +21,12 @@ import butterknife.ButterKnife;
  * description：
  */
 
-class CheckGoodsListAdapter extends BaseRecyclerAdapter<CheckBoxListBean> {
+class CheckGoodsListAdapter extends BaseRecyclerAdapter<CheckGoodsListBean> {
 
 
-    public CheckGoodsListAdapter(Context context, List<CheckBoxListBean> list) {
+    private onFinishItemClickListener mOnFinishItemClickListener;
+
+    public CheckGoodsListAdapter(Context context, List<CheckGoodsListBean> list) {
         super(context, list);
     }
 
@@ -59,7 +60,7 @@ class CheckGoodsListAdapter extends BaseRecyclerAdapter<CheckBoxListBean> {
         }
 
         @Override
-        public void onBindViewHolder(int position, List<CheckGoodsListBean> mData) {
+        public void onBindViewHolder(final int position, List<CheckGoodsListBean> mData) {
 
             CheckGoodsListBean checkGoodsListBean = mData.get(position);
             if (checkGoodsListBean == null) {
@@ -79,13 +80,29 @@ class CheckGoodsListAdapter extends BaseRecyclerAdapter<CheckBoxListBean> {
             }
 
             //货物名称
-            mTvGoodsName.setText("石灰粉");
+            mTvGoodsName.setText(checkGoodsListBean.zyhwmc);
             //集装箱代码
-            mTvZyjzxdm.setText("TBJU10010022");
+            mTvZyjzxdm.setText(checkGoodsListBean.zyjzxdm);
             //运单号
-            mTvYundan.setText("yda0002");
-            mTvXiangqu.setText("股6西内");
-            mTvXiangwei.setText("070252");
+            mTvYundan.setText(checkGoodsListBean.zyydaid);
+            mTvXiangqu.setText(checkGoodsListBean.xqmc);
+            mTvXiangwei.setText(checkGoodsListBean.xwdm);
+
+            mBtnFinish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnFinishItemClickListener.onItemClick(position);
+                }
+            });
+
         }
+    }
+
+    public void setOnFinishItemClickListener(onFinishItemClickListener listener) {
+        mOnFinishItemClickListener = listener;
+    }
+
+    public interface onFinishItemClickListener {
+        void onItemClick(int position);
     }
 }

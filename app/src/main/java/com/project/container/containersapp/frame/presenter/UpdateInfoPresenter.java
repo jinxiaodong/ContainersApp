@@ -19,7 +19,7 @@ import java.net.URLEncoder;
 
 public class UpdateInfoPresenter extends Presenter<IBaseView<UpdateInfoBean>> {
 
-    HttpJsonRequest mRequest;
+    private HttpJsonRequest mRequest;
     private final String mAuth;
 
     public UpdateInfoPresenter(Context context, IBaseView<UpdateInfoBean> mvpView) {
@@ -29,8 +29,19 @@ public class UpdateInfoPresenter extends Presenter<IBaseView<UpdateInfoBean>> {
     }
 
     /*更新当前作业过程代码*/
-    public void updateDQZYGCDM(String zydm,String zygcdm){
+    public void updateDQZYGCDM(String zydm, String zygcdm) {
+        getmParams().clear();
+        String url = HttpContstants.UPDATE_ZY_STATUS;
+        try {
+            String auth = URLEncoder.encode(mAuth, "utf-8");
+            url = HttpContstants.UPDATE_ZY_STATUS + "?auth=" + auth;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        put("zydm", zydm);
+        put("zydqzygcdm", zygcdm);
 
+        request(url);
     }
 
     /*验箱更新集装箱箱损*/
@@ -79,6 +90,61 @@ public class UpdateInfoPresenter extends Presenter<IBaseView<UpdateInfoBean>> {
         }
         getmParams().clear();
         put("zydm", zydm);
+        request(url);
+    }
+
+    /*吊箱更新接口*/
+    public void updateDxComplete(String txzh, String txlsh) {
+        getmParams().clear();
+        String url = HttpContstants.DX_UPDATE_COMPLETE;
+        try {
+            String auth = URLEncoder.encode(mAuth, "utf-8");
+            url = HttpContstants.DX_UPDATE_COMPLETE + "?auth=" + auth;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        put("txzh", txzh);
+        put("txlsh", txlsh);
+
+        request(url);
+    }
+
+
+    /*装箱完成*/
+    public void updateBoxingFinish(String zydm) {
+        getmParams().clear();
+        String url = HttpContstants.ZX_FINISH;
+        try {
+            String auth = URLEncoder.encode(mAuth, "utf-8");
+            url = HttpContstants.ZX_FINISH + "?auth=" + auth;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        put("zydm", zydm);
+        request(url);
+    }
+
+    /*检斤验货*/
+    public void updateJianjinCommit(String zydm,String zytyrzl, String zycyrzl,
+                                    String jzxzg,String zysfh){
+        getmParams().clear();
+        String url = HttpContstants.CHECK_GOODS_DONE;
+        try {
+            String auth = URLEncoder.encode(mAuth, "utf-8");
+            url = HttpContstants.CHECK_GOODS_DONE + "?auth=" + auth;//+"&zysfh="+zysfh
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        //作业代码
+        put("zydm", zydm);
+        //托运人重量
+//        put("zytyrzl", zytyrzl);
+        //承运人重量
+        put("zycyrzl", " "+zycyrzl+" ");
+        //集装箱自重
+//        put("jzxzg", jzxzg);
+        //施封号
+        put("zysfh", " "+zysfh+" ");
         request(url);
     }
 

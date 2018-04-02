@@ -10,7 +10,6 @@ import com.project.container.containersapp.R;
 import com.project.container.containersapp.frame.base.adapter.BaseRecyclerAdapter;
 import com.project.container.containersapp.frame.base.adapter.BaseViewHold;
 import com.project.container.containersapp.frame.model.BoxingListBean;
-import com.project.container.containersapp.frame.utils.ToastUtil;
 
 import java.util.List;
 
@@ -24,6 +23,8 @@ import butterknife.ButterKnife;
 
 class BoxingListAdapter extends BaseRecyclerAdapter<BoxingListBean> {
 
+
+    private onFinishItemClickListener mOnFinishItemClickListener;
 
     public BoxingListAdapter(Context context, List<BoxingListBean> list) {
         super(context, list);
@@ -55,7 +56,7 @@ class BoxingListAdapter extends BaseRecyclerAdapter<BoxingListBean> {
         }
 
         @Override
-        public void onBindViewHolder(int position, List<BoxingListBean> mData) {
+        public void onBindViewHolder(final int position, List<BoxingListBean> mData) {
             BoxingListBean boxingListBean = mData.get(position);
 
             if (boxingListBean == null) {
@@ -75,18 +76,27 @@ class BoxingListAdapter extends BaseRecyclerAdapter<BoxingListBean> {
             }
 
             //货物名称
-            mTvGoodsName.setText("石灰粉");
+            mTvGoodsName.setText(boxingListBean.zyhwmc);
             //集装箱代码
-            mTvZyjzxdm.setText("TBJU10010022");
+            mTvZyjzxdm.setText(boxingListBean.zyjzxdm);
             //运单号
-            mTvYundan.setText("yda0002");
+            mTvYundan.setText(boxingListBean.zyydaid);
 
             mBtnFinish.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ToastUtil.makeToast(mContext, "完成装箱");
+                    mOnFinishItemClickListener.onItemClick(position);
                 }
             });
         }
+    }
+
+
+    public void setOnFinishItemClickListener(onFinishItemClickListener listener) {
+        mOnFinishItemClickListener = listener;
+    }
+
+    public interface onFinishItemClickListener {
+        void onItemClick(int position);
     }
 }

@@ -25,6 +25,8 @@ public class DXBoxDetailsBean extends BaseBean {
      * dxdzylb : 0
      */
 
+    public String dxdtxzh;          //提箱组号
+    public String dxdlsh;           //提箱流水号
     public String dxdzydm;          //作业代码
     public String dxdzygclxdm;      //过程ID  对于发送作业，过程ID为“03”或“07”，以区分吊空箱和重箱（2018-02-04注释）
     public String dxdjzxdm;         //集装箱代码（箱号）

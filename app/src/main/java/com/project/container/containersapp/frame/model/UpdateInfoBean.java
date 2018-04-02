@@ -10,6 +10,7 @@ import com.project.container.containersapp.frame.base.BaseBean;
 public class UpdateInfoBean extends BaseBean {
 
 
+    public boolean isUpdated;       //有些返回结果会是isUpdate
     public boolean isupdate;
 
 

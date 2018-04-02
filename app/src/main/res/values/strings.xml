@@ -16,4 +16,10 @@
     <string name="loading_view_no_more">----已经到底了哦----</string>
     <string name="loading_view_loading">正在加载更多的数据…</string>
     <string name="loading_view_net_error">网络异常，点击重试</string>
+
+    <string name="check_box_success">验箱成功，是否返回验箱列表页？</string>
+    <string name="confirm_commit">确认提交？</string>
+    <string name="dx_success">吊箱成功，是否返回吊箱箱列表页？</string>
+    <string name="data_error">数据有误，是否返回列表页？</string>
+    <string name="confirm_pass">确认通过？</string>
 </resources>

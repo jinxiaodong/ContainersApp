@@ -20,6 +20,7 @@ import com.project.container.containersapp.frame.block.LoginBlock;
 import com.project.container.containersapp.frame.utils.DisplayUtil;
 import com.project.container.containersapp.frame.utils.SystemBarUtil;
 import com.project.container.containersapp.frame.utils.ToastUtil;
+import com.project.container.containersapp.frame.view.PersonalDialog;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class MainActivity extends JZXBaseActivity {
     private List<String> mRoles;
 
     private boolean isExit = false;
+    private PersonalDialog mQuitDialog;
 
 
     @Override
@@ -52,7 +54,7 @@ public class MainActivity extends JZXBaseActivity {
         super.initWidget(onSavedInstance);
         //设置沉浸式
         SystemBarUtil.tintStatusBar(this, Color.parseColor(getResString(R.color.main_blue)), 0);
-
+//        showOrHideMenuButton(View.VISIBLE);
         setTitle("选择操作类型");
         getTitle();
         showOrHideBackButton(View.INVISIBLE);
@@ -67,6 +69,7 @@ public class MainActivity extends JZXBaseActivity {
         super.initListener(onSavedInstance);
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -78,8 +81,8 @@ public class MainActivity extends JZXBaseActivity {
 
 
     /*
-        * 根据角色添加按钮
-        * */
+            * 根据角色添加按钮
+            * */
     private void addViews() {
         int width = DisplayUtil.dip2px(mContext, 200);
         int height = DisplayUtil.dip2px(mContext, 50);
@@ -102,16 +105,16 @@ public class MainActivity extends JZXBaseActivity {
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JumpToActivity(index);
+                    String role = mRoles.get(index);
+                    JumpToActivity(role);
                 }
             });
         }
     }
 
     /*跳转到对应的操作界面*/
-    private void JumpToActivity(int index) {
+    private void JumpToActivity(String role) {
 //        ToastUtil.makeToast(mContext, mRoles.get(index));
-        String role = mRoles.get(index);
         Intent intent = null;
         switch (role) {
             case "验箱":
@@ -119,25 +122,24 @@ public class MainActivity extends JZXBaseActivity {
                 break;
             case "吊箱":
                 intent = new Intent(mContext, DXBoxListActivity.class);
-
                 break;
             case "装箱":
-
+                intent = new Intent(mContext, BoxingListActivity.class);
                 break;
             case "检斤验货":
-
-                break;
-            case "配装":
-
-                break;
-            case "门卫":
                 intent = new Intent(mContext, CheckGoodsListActivity.class);
                 break;
+            case "配装":
+                ToastUtil.makeToast(mContext, "该功能暂未开放！");
+                break;
+            case "门卫":
+                ToastUtil.makeToast(mContext, "该功能暂未开放！");
+                break;
             case "关闭":
-                finish();
+                showQuitDialog();
                 break;
             default:
-                intent = new Intent(mContext, BoxingListActivity.class);
+                ToastUtil.makeToast(mContext, "该功能暂未开放！");
         }
         if (intent != null) {
             startActivity(intent);
@@ -159,4 +161,27 @@ public class MainActivity extends JZXBaseActivity {
             finish();
         }
     }
+
+    /*退出还是注销*/
+    private void showQuitDialog() {
+
+        if (null != mQuitDialog && mQuitDialog.isShowing()) {
+            return;
+        }
+        mQuitDialog = new PersonalDialog(mContext, Gravity.BOTTOM, true, new PersonalDialog.OnItemClickListener() {
+            @Override
+            public void onExitClick() {
+                finish();
+            }
+
+            @Override
+            public void onLoginOutClick() {
+                LoginBlock.LoginOut();
+                finish();
+            }
+        });
+
+        mQuitDialog.show();
+    }
+
 }
